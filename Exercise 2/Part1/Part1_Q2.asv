@@ -5,7 +5,7 @@ load ('HitachiGuns.mat');
 
 % Plot the 3 gun spectra in new window
 figure('name','Part1_Q2: HitachiGuns spectra');
-hold all;
-plot(HitachiGuns(:,1),'r');
-plot(HitachiGuns(:,2),'g');
-plot(HitachiGuns(:,3),'b');
+
+plot(HitachiGuns(:,1),'r',HitachiGuns(:,2),'b');
+%plot(HitachiGuns(1:),'b',HitachiGuns(2:),'g',HitachiGuns(3:),'r');
+%plot(HitachiGuns);
