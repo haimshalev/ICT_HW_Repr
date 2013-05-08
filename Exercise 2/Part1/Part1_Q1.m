@@ -1,10 +1,10 @@
-function [ ] = Part1_Q1(  )
+function [ChromaticityDiagramFigure ] = Part1_Q1(  )
 %Part1_Q1 : Plot the CIE-XYZ chromaticity diagram
 
 %load the supplied variables
 load ('xyz.mat');
 
-figure('name','Part1_Q1: CIE-XYZ chromaticity diagram');
+ChromaticityDiagramFigure = figure('name','Part1_Q1: CIE-XYZ chromaticity diagram');
 
 %Calculating x and y
 myxyz = [];
