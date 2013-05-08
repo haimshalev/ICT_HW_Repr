@@ -4,6 +4,8 @@ function [ ] = Part1_Q1(  )
 %load the supplied variables
 load ('xyz.mat');
 
+figure('name','Part1_Q1: CIE-XYZ chromaticity diagram');
+
 %Calculating x and y
 myxyz = [];
 myxyz(:,1) = xyz(:,1)./(xyz(:,1)+xyz(:,2)+xyz(:,3));
@@ -11,7 +13,7 @@ myxyz(:,2) = xyz(:,2)./(xyz(:,1)+xyz(:,2)+xyz(:,3));
 myxyz(:,3) = xyz(:,3)./(xyz(:,1)+xyz(:,2)+xyz(:,3));
 
 %Plot a line which shows the horse
-figure;plot(myxyz(:,1),myxyz(:,2));
+plot(myxyz(:,1),myxyz(:,2));
 
 %calculating the syze of each primary
 n = length(xyz(:,1));
