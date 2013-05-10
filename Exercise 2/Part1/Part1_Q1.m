@@ -1,26 +1,37 @@
+%Zahi Kfir         200681476
+%Haim Shalelasvili 200832780
+
 function [ChromaticityDiagramFigure ] = Part1_Q1(  )
 %Part1_Q1 : Plot the CIE-XYZ chromaticity diagram
 
 %load the supplied variables
 load ('xyz.mat');
 
+%transpose the cmf (working with cmf's transpose dimensions as learned in class ,3x361)
+xyz = xyz';
+
 ChromaticityDiagramFigure = figure('name','Part1_Q1: CIE-XYZ chromaticity diagram');
 
 %Calculating x and y
-myxyz = [];
-myxyz(:,1) = xyz(:,1)./(xyz(:,1)+xyz(:,2)+xyz(:,3));
-myxyz(:,2) = xyz(:,2)./(xyz(:,1)+xyz(:,2)+xyz(:,3));
-myxyz(:,3) = xyz(:,3)./(xyz(:,1)+xyz(:,2)+xyz(:,3));
+%Finding the CIE-XYZ values
 
-%Plot a line which shows the horse
-plot(myxyz(:,1),myxyz(:,2));
+%calculating the syze of each testlight
+n = length(xyz(1,:));
 
-%calculating the syze of each primary
-n = length(xyz(:,1));
+%Converting this values to xyz
+sumXYZ = sum(xyz,1);
 
-%Reshape the xy Matrix for applying transformation to rgb (Matlab shows
+myxyz = zeros(3,n);
+for i=1:1:n
+    myxyz(:,i) = xyz(:,i)./sumXYZ(i);
+end
+
+%Plot a line which shows the horse curve
+plot(myxyz(1,:),myxyz(2,:));
+
+
+%Applying transformation to rgb (Matlab shows
 %only rgb)
-xyzMatrix = reshape([myxyz],[n 3]);
 
 %xyz to rgb transformation matrix , as showen in class
 toRgbMatrix = [0.49 0.31 0.20;
@@ -28,13 +39,13 @@ toRgbMatrix = [0.49 0.31 0.20;
                0.00 0.01 0.99];
       
 %Applying the transformation
-rgb = xyzMatrix/toRgbMatrix;
+rgb = myxyz'/toRgbMatrix;
 
 %Reshaph the matrix to an image dimensions
 rgb = reshape([rgb],[n 1 3]);
 
 %Fill the line with the rgb colors
-patch(myxyz(:,1),myxyz(:,2),rgb);
+patch(myxyz(1,:),myxyz(2,:),rgb);
 
 end
 
