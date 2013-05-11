@@ -1,7 +1,7 @@
 %Zahi Kfir         200681476
 %Haim Shalelasvili 200832780
 
-function [ChromaticityDiagramFigure ] = Part1_Q1(  )
+function [ChromaticityDiagramFigure , myxyz] = Part1_Q1(  )
 %Part1_Q1 : Plot the CIE-XYZ chromaticity diagram
 
 %load the supplied variables
@@ -25,6 +25,10 @@ myxyz = zeros(3,n);
 for i=1:1:n
     myxyz(:,i) = xyz(:,i)./sumXYZ(i);
 end
+
+%Closing the polygon
+
+myxyz(:,n) = myxyz(:,1);
 
 %Plot a line which shows the horse curve
 plot(myxyz(1,:),myxyz(2,:));
