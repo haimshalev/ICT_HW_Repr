@@ -41,9 +41,7 @@ plot(OpponentSpace(1, :), OpponentSpace(3, :));
 
 %% Part2 Q5 c
 
-OpponentSpaceCovarianceMatrix = ( OpponentSpace-mean(OpponentSpace(:)) ) * ( OpponentSpace'-mean(OpponentSpace(:)));
-
-OpponentSpaceCovarianceMatrix = OpponentSpace*OpponentSpace'
+OpponentSpaceCovarianceMatrix = ( OpponentSpace-mean(OpponentSpace(:)) ) * ( OpponentSpace'-mean(OpponentSpace(:)))
 
 
 
