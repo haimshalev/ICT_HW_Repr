@@ -1,3 +1,6 @@
+%Zahi Kfir          200681476
+%Haim Shalelashvili 200832780
+
 function [ ] = Part2_Q5(  )
 % Part2 Q5 a
 
@@ -41,9 +44,7 @@ plot(OpponentSpace(1, :), OpponentSpace(3, :));
 
 %% Part2 Q5 c
 
-OpponentSpaceCovarianceMatrix = ( OpponentSpace-mean(OpponentSpace(:)) ) * ( OpponentSpace'-mean(OpponentSpace(:)));
-
-OpponentSpaceCovarianceMatrix = OpponentSpace*OpponentSpace'
+OpponentSpaceCovarianceMatrix = ( OpponentSpace-mean(OpponentSpace(:)) ) * ( OpponentSpace'-mean(OpponentSpace(:)))
 
 
 
