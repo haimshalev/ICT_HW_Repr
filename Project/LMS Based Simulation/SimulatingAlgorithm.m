@@ -1,4 +1,4 @@
-function [ RGBModifedImg ] = SimulatingAlgorithm( srcImg , xyzPoints , type)
+function [ RGBModifedImg , ProjectionDistanceMatrix ] = SimulatingAlgorithm( srcImg , xyzPoints , type)
 %% Prepere Picture
 
 srcImg = double(srcImg);
@@ -49,6 +49,7 @@ Se = whiteLMS(3);
 
 %Initialize the xyzModifiedImg
 LMSModifiedImg = zeros(size(LMSImg));
+ProjectionDistanceMatrix = zeros(size(LMSImg,2) , 1);
 
 %for each pixel we will find the line between the chromacity value to the
 %Confusion point
@@ -81,6 +82,9 @@ for i=1:1:n
         LMSModifiedImg(2,i) = Mq;
         LMSModifiedImg(3,i) = Sq;
         
+        %Update the projection distance
+        ProjectionDistanceMatrix(i) = abs(LMSModifiedImg(1,i) - LMSImg(1,i));
+        
     else if (strcmp(type,'deuteranopes') == 1)
             %Finding the monochromatic index according to the specific color
             if(Sq/Lq < Se/Le)
@@ -103,6 +107,9 @@ for i=1:1:n
             LMSModifiedImg(1,i) = Lq;
             LMSModifiedImg(2,i) = -(a*Lq + c*Sq)/b;
             LMSModifiedImg(3,i) = Sq;
+            
+            %Update the projection distance
+            ProjectionDistanceMatrix(i) = abs(LMSModifiedImg(2,i) - LMSImg(2,i));
             
         else if (strcmp(type,'tritanopic') == 1)
                 %Finding the monochromatic index according to the specific color
@@ -128,6 +135,9 @@ for i=1:1:n
                 LMSModifiedImg(1,i) = Lq;
                 LMSModifiedImg(2,i) = Mq;
                 LMSModifiedImg(3,i) = -(a*Lq + b*Mq)/c;
+                
+                %Update the projection distance
+                ProjectionDistanceMatrix(i) = abs(LMSModifiedImg(3,i) - LMSImg(3,i));
             end
         end
     end

@@ -1,4 +1,4 @@
-function [ RGBModifiedImg ] = deuteranopes( srcImg )
+function [RGBModifiedImg,ProjectionDistanceMatrix] = deuteranopes( srcImg )
 
 %% Get the points that looks the same
 
@@ -20,6 +20,6 @@ SamePoints(:,1) =XYZtoLMS*(XYZtoRGB\[0 178 255]'); %475nm
 SamePoints(:,2) =XYZtoLMS*(XYZtoRGB\[236 255 0]');%575nm
 
 %% Run the simulating algorithm with this custom matrices
-RGBModifiedImg = SimulatingAlgorithm(srcImg,SamePoints,'deuteranopes');
+[RGBModifiedImg,ProjectionDistanceMatrix] = SimulatingAlgorithm(srcImg,SamePoints,'deuteranopes');
 
 end

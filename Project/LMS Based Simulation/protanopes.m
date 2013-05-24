@@ -1,4 +1,4 @@
-function [ RGBModifiedImg ] = protanopes( srcImg )
+function [ RGBModifiedImg , ProjectionDistanceMatrix ] = protanopes( srcImg )
 
 %% Get the points that looks the same
 
@@ -21,6 +21,6 @@ SamePoints(:,1) =XYZtoLMS*(XYZtoRGB\([0 178 255]')); %475nm
 SamePoints(:,2) =XYZtoLMS*(XYZtoRGB\([236 255 0]'));%575nm
 
 %% Run the simulating algorithm with this custom matrices
-RGBModifiedImg = SimulatingAlgorithm(srcImg,SamePoints,'protanopes');
+[RGBModifiedImg,ProjectionDistanceMatrix] = SimulatingAlgorithm(srcImg,SamePoints,'protanopes');
 
 end

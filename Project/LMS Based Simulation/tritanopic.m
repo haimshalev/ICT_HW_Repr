@@ -1,4 +1,4 @@
-function [ RGBModifiedImg ] = tritanopic( srcImg )
+function [RGBModifiedImg,ProjectionDistanceMatrix] = tritanopic( srcImg )
 
 %% Get the points that looks the same.
 
@@ -22,6 +22,6 @@ SamePoints(:,1) = XYZtoLMS*(XYZtoRGB\([0 229 255]'));%485nm
 SamePoints(:,2) = XYZtoLMS*(XYZtoRGB\([255 0 0]'));%660nm
 
 %% Run the simulating algorithm with this custom matrices
-RGBModifiedImg = SimulatingAlgorithm(srcImg,SamePoints,'tritanopic');
+[RGBModifiedImg,ProjectionDistanceMatrix] = SimulatingAlgorithm(srcImg,SamePoints,'tritanopic');
 
 end
