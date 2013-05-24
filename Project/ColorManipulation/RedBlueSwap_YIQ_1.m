@@ -11,6 +11,6 @@ New_I = Q_Channel;
 New_Q = I_Channel;
 
 FixedPic_YIQ = cat(3, New_Y,New_I , New_Q);
-FixedPic_RGB = ntsc2rgb(FixedPic_YIQ);
+FixedPic_RGB = ntsc2rgb(FixedPic_YIQ)*255;
 
 end
