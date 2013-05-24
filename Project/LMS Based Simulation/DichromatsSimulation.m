@@ -1,3 +1,4 @@
+function [ ] = DichromatsSimulation( importedImg )
 %% Summary
 
 %{
@@ -8,10 +9,6 @@ It will :
     3)show the results
 %}
 
-%% Prepere Picture
-
-%Load the flowers Image
-importedImg = imread('stand.png');
 
 %% Run the simulating algorithms
 
