@@ -1,3 +1,6 @@
+%Zahi Kfir          200681476
+%Haim Shalelashvili 200832780
+
 function [ rgbValues ] = GetRGBValues( SpdMatrix )
 %GETRGBVALUES - return a normalized rgb values for the input spd matrix
 
