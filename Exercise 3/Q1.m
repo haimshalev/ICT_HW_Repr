@@ -35,22 +35,7 @@ function [] = ShowPatchUnderIlluminant(surface , illuminant , figureName)
 color = illuminant .* surface;
 
 %Convert the spd to rgb values
-
-%Load the xyz matching functions
-load('xyz.mat');
-
-%Get the xyz values
-xyzValues = xyz'*color;
-
-%Load the XYZ 2 RGB matrix
-load ('XYZ2RGB.mat');
-
-%Convert the xyz values to rgb values
-rgbValues = XYZ2RGB* xyzValues;
-
-%we do not know illumination intensity, 
-%so lets scale the resulting RGB values to be maximal in one of the channels
-rgbValues = rgbValues ./ max(rgbValues(:));
+rgbValues = GetRGBValues(color);
 
 %show a patch 
 x = [0 1 1 0 0];
