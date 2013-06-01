@@ -84,11 +84,11 @@ bTestThis = true;
 if bTestThis
     OriginalPicture = imread('Market.bmp');
     FixedPicture = Daltonize_1(OriginalPicture);
-    PlotDaltonization(OriginalPicture,FixedPicture,'Daltonize1');
+    PlotDaltonization_YIQ(OriginalPicture,FixedPicture,'Daltonize1');
 
     OriginalPicture = imread('natural_flowers.bmp');
     FixedPicture = Daltonize_1(OriginalPicture);
-    PlotDaltonization(OriginalPicture,FixedPicture,'Daltonize1');
+    PlotDaltonization_YIQ(OriginalPicture,FixedPicture,'Daltonize1');
 end
 
 
