@@ -19,4 +19,5 @@ hold all;
 plot(GrayAssumpIllum_Normalized);
 plot(LinIllum_Normalized);
 
+disp('we used the gray world ASSUMPTION, this assumption can be wrong, the mean might not be gray... ');
 end
