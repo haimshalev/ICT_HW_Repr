@@ -154,6 +154,7 @@ RGBModifedImg = XYZtoRGB * XYZModifiedImg;
  
 %% Restore the original Image
 
+ProjectionDistanceMatrix = reshape(ProjectionDistanceMatrix',[sizeImage(1) sizeImage(2) 1]);
 RGBModifedImg = reshape(RGBModifedImg',[sizeImage(1) sizeImage(2) sizeImage(3)]);
 RGBModifedImg = uint8(RGBModifedImg);
 
