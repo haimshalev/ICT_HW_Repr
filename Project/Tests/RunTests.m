@@ -16,6 +16,7 @@ function [ ] = RunTests()
         Test_Daltonize_1(TestImagesList,ImagesCount);
         Test_Daltonize_YIQ(TestImagesList,ImagesCount);
         Test_Daltonize_2(TestImagesList,ImagesCount); 
+        Test_Daltonize_3(TestImagesList,ImagesCount); 
 
         Test_Increase_RG_Contrast_1(TestImagesList,ImagesCount); 
         Test_Increase_RG_Contrast_2(TestImagesList,ImagesCount); 
@@ -25,12 +26,8 @@ function [ ] = RunTests()
         Final_Test_2(TestImagesList,ImagesCount);
         Final_Test_3(TestImagesList,ImagesCount);
         Final_Test_4(TestImagesList,ImagesCount);
-    else
-        Test_Daltonize_2(TestImagesList,ImagesCount);
-        Final_Test_1(TestImagesList,ImagesCount);
-        Final_Test_2(TestImagesList,ImagesCount);
-        Final_Test_3(TestImagesList,ImagesCount);
-        Final_Test_4(TestImagesList,ImagesCount);
+    else  
+        Test_Daltonize_3(TestImagesList,ImagesCount); 
     end
     
 end
@@ -166,6 +163,21 @@ function [ ] = Test_Daltonize_2(TestImagesList,ImagesCount)
         disp(strcat('done daltonize 2 test for:_',CurrentImageName));
     end
     disp('finished all daltonize 2 Tests');
+end
+function [ ] = Test_Daltonize_3(TestImagesList,ImagesCount)   
+    for ii=1:ImagesCount
+        CurrentImageName = TestImagesList(ii).name;
+        CurrentImage = imread(CurrentImageName);
+       
+        TestName = 'Daltonize/Daltonize 3/';      
+        CreateTestResultFolder(TestName);
+        
+        FixedPic = Daltonize_3(CurrentImage,Recolor_YIQ_1(CurrentImage),35);
+        SaveResults(CurrentImage,FixedPic,strcat(TestName,'/',strrep(CurrentImageName,'.bmp','')),0);
+                        
+        disp(strcat('done daltonize 3 test for:_',CurrentImageName));
+    end
+    disp('finished all daltonize 3 Tests');
 end
 
 function [ ] = Test_Increase_RG_Contrast_1(TestImagesList,ImagesCount)
@@ -321,25 +333,8 @@ function [ ] = Final_Test_4(TestImagesList,ImagesCount)
     disp('finished all Final 4 Tests');
 end
 
-function [ ] =  SaveResults(OriginalPic_RGB , FixedPic_RGB , FigureName, IsYIQ)   
-    figure('name',FigureName,'NumberTitle','off');
-    subplot(2,2,1), imshow(OriginalPic_RGB), title('Original pic');
-    subplot(2,2,2), imshow(protanopes(OriginalPic_RGB)), title('Original pic through protanopes eyes');
-    if(IsYIQ == 1)
-        subplot(2,2,3), imshow(FixedPic_RGB/256), title('Fixed pic'); 
-    else
-        subplot(2,2,3), imshow(FixedPic_RGB), title('Fixed pic'); 
-    end
-    subplot(2,2,4), imshow(protanopes(FixedPic_RGB)), title('Fixed pic through protanopes eyes ');  
 
-    FileName = strcat('Test results/',FigureName);
-    saveas(gcf,FileName, 'pdf');
-    close gcf;  
-end
-function [ ] =  CreateTestResultFolder(TestName)
-    DataFolder = strcat('Test results/',TestName);
-    mkdir(DataFolder)
-end
+
 
 
 
