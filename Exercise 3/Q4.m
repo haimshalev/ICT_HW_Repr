@@ -17,6 +17,9 @@ for i=1:size(images,1)
     %Determine illumination of a scene using linear model of illuminants
     
     Illuminant = DetermineIlluminationUsingLinearModel(img);
+    
+    %Whole image taken under the same illuminant ,thus we can take the
+    %first illum
     Illuminant = Illuminant(:,1);
     
     %Normalize the illuminant
