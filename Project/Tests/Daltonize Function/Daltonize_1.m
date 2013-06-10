@@ -1,4 +1,4 @@
-function [ FixedPicture ] = Daltonize_1(OriginalPic_RGB,BluePic_RGB)
+function [ FixedPicture ] = Daltonize_1(OriginalPic_RGB,BluePic_RGB,LowerThreshold)
 
 %# Convert the images to HSV space
 OriginalPic_HSV = rgb2hsv(OriginalPic_RGB);    
@@ -8,7 +8,7 @@ BluePic_HSV = rgb2hsv(BluePic_RGB);
 OriginalPic_H = 360.*OriginalPic_HSV(:,:,1);     
 
 %# Select "red" pixels
-RedIndex = ~(OriginalPic_H > 35) | ~(OriginalPic_H < 340);
+RedIndex = ~(OriginalPic_H > LowerThreshold) | ~(OriginalPic_H < 340);
 
 %# Get the original planes
 OriginalPic_New_H = OriginalPic_HSV(:,:,1);
