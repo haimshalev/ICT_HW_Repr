@@ -1,3 +1,6 @@
+%Zahi Kfir          200681476
+%Haim Shalelashvili 200832780
+
 function [illuminant] = DetermineIlluminationUsingLinearModel(img)
 % Determine illumination of a scene using linear model of illuminants and returns it
 
