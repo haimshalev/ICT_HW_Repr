@@ -22,6 +22,9 @@ function [  ] = Q6(  )
     rgbValues = GetRGBValues(macbeth);    
     figure('Name','Macbeth surface');
     display_colors(rgbValues);
+    
+    disp('linear model illuminant (Q4) gives better surface results!');
+    disp('we used the gray world ASSUMPTION, this assumption can be wrong, the mean might not be gray... ');
 end
 
 
@@ -52,4 +55,5 @@ function [ rgbValues ] = FindSurface(img , Illum)
     end
 
     rgbValues = GetRGBValues(basisFunctions*Surfaces);
+   
 end
