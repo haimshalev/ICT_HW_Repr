@@ -11,6 +11,6 @@ function [ ] = SaveResults(OriginalPic_RGB , FixedPic_RGB , FigureName, IsYIQ)
 
     FileName = strcat('Test results/',FigureName);
     saveas(gcf,FileName, 'jpg');
-    %close gcf;  
+    close gcf;  
 end
 

@@ -1,14 +1,23 @@
 function [ ReturnMatrix ] = GaussianConvolution_MaxValue_1(OriginalMatrix)
-        % SOS Haim!
-
-        %G = fspecial('gaussian',[9 9],2.5);
-        %G(5,5) = 1;
-        %G = G * 5;
-        
-        G = ones(7,7);
-        G = G * 0.1;
+        G = fspecial('gaussian',[7 7],0.5);
         G(4,4) = 1;
-
+        G = G * 5;
+        
+       %{ 
+        A = 1;
+        B = 0.5;
+        C = 0.25;
+        D = 0.125;
+        
+        G = [ D D D D D D D ; ...
+              D C C C C C D ; ...
+              D C B B B C D ; ...
+              D C B A B C D ; ...
+              D C B B B C D ; ...
+              D C C C C C D ; ...
+              D D D D D D D ; ...
+            ];
+       %} 
         
         Ig1= imfilter(OriginalMatrix,G,'same');
         [SizeX,SizeY] = size(Ig1);
