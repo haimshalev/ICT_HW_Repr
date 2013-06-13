@@ -16,6 +16,8 @@ function [ ] = RunTests()
         Test_Daltonize_1(TestImagesList,ImagesCount);
         Test_Daltonize_YIQ(TestImagesList,ImagesCount);
         Test_Daltonize_2(TestImagesList,ImagesCount); 
+        Test_Daltonize_3(TestImagesList,ImagesCount); 
+        Test_Daltonize_4(TestImagesList,ImagesCount); 
 
         Test_Increase_RG_Contrast_1(TestImagesList,ImagesCount); 
         Test_Increase_RG_Contrast_2(TestImagesList,ImagesCount); 
@@ -25,16 +27,90 @@ function [ ] = RunTests()
         Final_Test_2(TestImagesList,ImagesCount);
         Final_Test_3(TestImagesList,ImagesCount);
         Final_Test_4(TestImagesList,ImagesCount);
-    else
-        Test_Daltonize_2(TestImagesList,ImagesCount);
-        Final_Test_1(TestImagesList,ImagesCount);
-        Final_Test_2(TestImagesList,ImagesCount);
-        Final_Test_3(TestImagesList,ImagesCount);
-        Final_Test_4(TestImagesList,ImagesCount);
+        
+        SmoothTransformTest();
+        GaussianConvolution_MaxValue_1_Test();
+        BadPixelsRecognition1_Test();
+    else  
+        Test_Daltonize_5(TestImagesList,ImagesCount); 
     end
     
+    
+    
+       
+    disp('TheEnd!');
+    
+end
+function [ ] = BadPixelsRecognition1_Test(TestImagesList,ImagesCount)
+    for ii=1:ImagesCount
+        CurrentImageName = TestImagesList(ii).name;
+        CurrentImage = imread(CurrentImageName);
+        
+        TestName = strcat('BadPixelsRecognition/BadPixelsRecognition 1/',strrep(CurrentImageName,'.bmp',''));      
+        CreateTestResultFolder(TestName);
+        
+        BadPixelMatrix = BadPixelsRecognition1(CurrentImage,110);
+        
+        New_R = CurrentImage(:,:,1);
+        New_G = CurrentImage(:,:,2);
+        New_B = CurrentImage(:,:,3);
+        
+        New_R(BadPixelMatrix) = 256;
+        New_G(BadPixelMatrix) = 256;
+        New_B(BadPixelMatrix) = 256;
+        
+        NoBadPixel = CurrentImage;
+        
+        NoBadPixel(:,:,1) = New_R;
+        NoBadPixel(:,:,2) = New_G;
+        NoBadPixel(:,:,3) = New_B;
+        
+        SaveResults(CurrentImage,NoBadPixel,TestName,0);
+        
+        disp(strcat('done daltonize 1 test for:_',CurrentImageName));
+    end
+    disp('finished all daltonize 1 Tests');
 end
 
+
+function [ ] = GaussianConvolution_MaxValue_1_Test()
+    Temp = zeros(20,20); 
+    
+    Temp(7,7) =1;Temp(7,8) =1;Temp(7,9) =1;Temp(7,10) =1;Temp(8,7) =1;Temp(8,8) =1;Temp(8,9) =1;Temp(8,10) =1;
+    %{
+    for i=6:14
+        for j=6:14
+            Temp(i,j) = 1;
+        end
+    end
+    %}
+    Temp2 = GaussianConvolution_MaxValue_1(Temp);
+    
+    disp('done testing GaussianConvolution_MaxValue_1');
+end
+
+function [ ] = SmoothTransformTest()
+    Temp1 = zeros(100,100,3);    Temp1(:,:,1) = 0.2;     Temp1(:,:,3) = 0.3;    Temp1(:,:,2) = 0.5;   
+    Temp2 = zeros(100,100,3);    Temp2(:,:,1) = 0.6;    Temp2(:,:,3) = 0.4;    Temp2(:,:,2) = 0.1;
+    figure('name','RGB Smoothnes','NumberTitle','off');    Temp3 = SmoothTransform( Temp1 , Temp2 , 0.5,0.25,0.125);     imshow(Temp3);
+    figure('name','HSV Smoothnes','NumberTitle','off');    Temp3 = SmoothTransform( rgb2hsv(Temp1) , rgb2hsv(Temp2) , 0.5,0.25,0.125 );     imshow(hsv2rgb(Temp3));
+           
+    Temp1 = zeros(100,100,3);    Temp1(:,:,1) = 0.4;     Temp1(:,:,3) = 0.5;    Temp1(:,:,2) = 0.6;   
+    Temp2 = zeros(100,100,3);    Temp2(:,:,1) = 0.8;    Temp2(:,:,3) = 0.7;    Temp2(:,:,2) = 0.1;
+    figure('name','RGB Smoothnes','NumberTitle','off');    Temp3 = SmoothTransform( Temp1 , Temp2 , 0.5,0.25,0.125 );     imshow(Temp3);
+    figure('name','HSV Smoothnes','NumberTitle','off');    Temp3 = SmoothTransform( rgb2hsv(Temp1) , rgb2hsv(Temp2) , 0.5,0.25,0.125 );     imshow(hsv2rgb(Temp3));
+           
+    Temp1 = zeros(100,100,3);    Temp1(:,:,1) = 0.6;     Temp1(:,:,3) = 0.25;    Temp1(:,:,2) = 0.455;  
+    Temp2 = zeros(100,100,3);    Temp2(:,:,1) = 0.278;    Temp2(:,:,3) = 0.87;    Temp2(:,:,2) = 0.63;
+    figure('name','RGB Smoothnes','NumberTitle','off');    Temp3 = SmoothTransform( Temp1 , Temp2 , 0.5,0.25,0.125);    imshow(Temp3);
+    figure('name','HSV Smoothnes','NumberTitle','off');    Temp3 = SmoothTransform( rgb2hsv(Temp1) , rgb2hsv(Temp2) , 0.5,0.25,0.125 );    imshow(hsv2rgb(Temp3));
+           
+    Temp1 = zeros(100,100,3);    Temp1(:,:,1) = 0.75;     Temp1(:,:,3) = 0.13;    Temp1(:,:,2) = 0.32;  
+    Temp2 = zeros(100,100,3);    Temp2(:,:,1) = 0.42;    Temp2(:,:,3) = 0.77;    Temp2(:,:,2) = 0.23;
+    figure('name','RGB Smoothnes','NumberTitle','off');    Temp3 = SmoothTransform( Temp1 , Temp2, 0.5,0.25,0.125 );    imshow(Temp3);
+    figure('name','HSV Smoothnes','NumberTitle','off');    Temp3 = SmoothTransform( rgb2hsv(Temp1) , rgb2hsv(Temp2), 0.5,0.25,0.125 );    imshow(hsv2rgb(Temp3));
+    
+end
 
 function [ ] = Test_Recoloring(TestImagesList,ImagesCount)    
     for ii=1:ImagesCount
@@ -46,7 +122,7 @@ function [ ] = Test_Recoloring(TestImagesList,ImagesCount)
         
         RecoloredImage = Recolor_YIQ_1(CurrentImage);
         SaveResults(CurrentImage,RecoloredImage,strcat(TestName,'/','YIQ_1'),1);
-      
+      %{
         RecoloredImage = Recolor_RGB_1(CurrentImage);
         SaveResults(CurrentImage,RecoloredImage,strcat(TestName,'/','RGB_1'),0);
        
@@ -58,7 +134,7 @@ function [ ] = Test_Recoloring(TestImagesList,ImagesCount)
        
         RecoloredImage = Recolor_LAB_3(CurrentImage);
         SaveResults(CurrentImage,RecoloredImage,strcat(TestName,'/','LAB_3'),0);
-        
+        %}
         disp(strcat('done recoloring test for:_',CurrentImageName));
     end
     disp('finished all recoloring Tests');
@@ -140,7 +216,7 @@ function [ ] = Test_Daltonize_YIQ(TestImagesList,ImagesCount)
         TestName = strcat('Daltonize/Daltonize YIQ/',strrep(CurrentImageName,'.bmp',''));      
         CreateTestResultFolder(TestName);
         
-        for j=30:5:40
+        for j=35:5:35
             FixedPic = Daltonize_1(CurrentImage,Recolor_YIQ_1(CurrentImage),j);
             SaveResults(CurrentImage,FixedPic,strcat(TestName,'/','Threashold_',num2str(j)),1);
         end
@@ -166,6 +242,56 @@ function [ ] = Test_Daltonize_2(TestImagesList,ImagesCount)
         disp(strcat('done daltonize 2 test for:_',CurrentImageName));
     end
     disp('finished all daltonize 2 Tests');
+end
+function [ ] = Test_Daltonize_3(TestImagesList,ImagesCount)   
+    for ii=1:ImagesCount
+        CurrentImageName = TestImagesList(ii).name;
+        CurrentImage = imread(CurrentImageName);
+       
+        TestName = 'Daltonize/Daltonize 3/';      
+        CreateTestResultFolder(TestName);
+        
+        FixedPic = Daltonize_3(CurrentImage,Recolor_YIQ_1(CurrentImage),35);
+        SaveResults(CurrentImage,FixedPic,strcat(TestName,strrep(CurrentImageName,'.bmp','')),0);
+                        
+        disp(strcat('done daltonize 3 test for:_',CurrentImageName));
+    end
+    disp('finished all daltonize 3 Tests');
+end
+function [ ] = Test_Daltonize_4(TestImagesList,ImagesCount)   
+    for ii=1:ImagesCount
+        CurrentImageName = TestImagesList(ii).name;
+        CurrentImage = imread(CurrentImageName);
+       
+        TestName = strcat('Daltonize/Daltonize 4/',strrep(CurrentImageName,'.bmp',''));      
+        CreateTestResultFolder(TestName);
+        
+        for j=40:10:140
+            FixedPic = Daltonize_4(CurrentImage,Recolor_YIQ_1(CurrentImage),j);
+            SaveResults(CurrentImage,FixedPic,strcat(TestName,'/','Threashold_',num2str(j)),0);
+        end
+                
+        disp(strcat('done daltonize 4 test for:_',CurrentImageName));
+    end
+    disp('finished all daltonize 4 Tests');
+end
+function [ ] = Test_Daltonize_5(TestImagesList,ImagesCount)   
+    for ii=1:ImagesCount
+        CurrentImageName = TestImagesList(ii).name;
+        CurrentImage = imread(CurrentImageName);
+       
+        TestName = strcat('Daltonize/Daltonize 5/',strrep(CurrentImageName,'.bmp',''));      
+        CreateTestResultFolder(TestName);
+
+        A=70;
+        for j=A:20:A
+            FixedPic_RGB = Daltonize_5(CurrentImage,Recolor_YIQ_2(CurrentImage),j);
+            SaveResults(CurrentImage,FixedPic_RGB,strcat(TestName,'/','Threashold_',num2str(j)),0);
+        end
+        
+        disp(strcat('done daltonize 5 test for:_',CurrentImageName));
+    end
+    disp('finished all daltonize 5 Tests');
 end
 
 function [ ] = Test_Increase_RG_Contrast_1(TestImagesList,ImagesCount)
@@ -321,25 +447,8 @@ function [ ] = Final_Test_4(TestImagesList,ImagesCount)
     disp('finished all Final 4 Tests');
 end
 
-function [ ] =  SaveResults(OriginalPic_RGB , FixedPic_RGB , FigureName, IsYIQ)   
-    figure('name',FigureName,'NumberTitle','off');
-    subplot(2,2,1), imshow(OriginalPic_RGB), title('Original pic');
-    subplot(2,2,2), imshow(protanopes(OriginalPic_RGB)), title('Original pic through protanopes eyes');
-    if(IsYIQ == 1)
-        subplot(2,2,3), imshow(FixedPic_RGB/256), title('Fixed pic'); 
-    else
-        subplot(2,2,3), imshow(FixedPic_RGB), title('Fixed pic'); 
-    end
-    subplot(2,2,4), imshow(protanopes(FixedPic_RGB)), title('Fixed pic through protanopes eyes ');  
 
-    FileName = strcat('Test results/',FigureName);
-    saveas(gcf,FileName, 'pdf');
-    close gcf;  
-end
-function [ ] =  CreateTestResultFolder(TestName)
-    DataFolder = strcat('Test results/',TestName);
-    mkdir(DataFolder)
-end
+
 
 
 
