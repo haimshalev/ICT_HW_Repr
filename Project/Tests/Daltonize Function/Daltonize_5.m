@@ -1,6 +1,5 @@
- function [ FixedPicture_RGB ] = Daltonize_4(OriginalPic_RGB,BluePic_RGB,Threshold)     
-    
-    BadPixelMatrix = BadPixelsRecognition1(OriginalPic_RGB,Threshold);
+ function [ FixedPicture_RGB ] = Daltonize_5(OriginalPic_RGB,BluePic_RGB,Threshold)     
+    BadPixelMatrix = BadPixelsRecognition2(OriginalPic_RGB,Threshold);
     
     FixedPicture_RGB = OriginalPic_RGB;
 

@@ -17,6 +17,7 @@ function [ ] = RunTests()
         Test_Daltonize_YIQ(TestImagesList,ImagesCount);
         Test_Daltonize_2(TestImagesList,ImagesCount); 
         Test_Daltonize_3(TestImagesList,ImagesCount); 
+        Test_Daltonize_4(TestImagesList,ImagesCount); 
 
         Test_Increase_RG_Contrast_1(TestImagesList,ImagesCount); 
         Test_Increase_RG_Contrast_2(TestImagesList,ImagesCount); 
@@ -28,9 +29,10 @@ function [ ] = RunTests()
         Final_Test_4(TestImagesList,ImagesCount);
         
         SmoothTransformTest();
-        GaussianConvolution_MaxValue_1_Test
+        GaussianConvolution_MaxValue_1_Test();
+        BadPixelsRecognition1_Test();
     else  
-        Test_Daltonize_4(TestImagesList,ImagesCount); 
+        Test_Daltonize_5(TestImagesList,ImagesCount); 
     end
     
     
@@ -214,7 +216,7 @@ function [ ] = Test_Daltonize_YIQ(TestImagesList,ImagesCount)
         TestName = strcat('Daltonize/Daltonize YIQ/',strrep(CurrentImageName,'.bmp',''));      
         CreateTestResultFolder(TestName);
         
-        for j=30:5:40
+        for j=35:5:35
             FixedPic = Daltonize_1(CurrentImage,Recolor_YIQ_1(CurrentImage),j);
             SaveResults(CurrentImage,FixedPic,strcat(TestName,'/','Threashold_',num2str(j)),1);
         end
@@ -268,10 +270,28 @@ function [ ] = Test_Daltonize_4(TestImagesList,ImagesCount)
             FixedPic = Daltonize_4(CurrentImage,Recolor_YIQ_1(CurrentImage),j);
             SaveResults(CurrentImage,FixedPic,strcat(TestName,'/','Threashold_',num2str(j)),0);
         end
-                        
+                
         disp(strcat('done daltonize 4 test for:_',CurrentImageName));
     end
     disp('finished all daltonize 4 Tests');
+end
+function [ ] = Test_Daltonize_5(TestImagesList,ImagesCount)   
+    for ii=1:ImagesCount
+        CurrentImageName = TestImagesList(ii).name;
+        CurrentImage = imread(CurrentImageName);
+       
+        TestName = strcat('Daltonize/Daltonize 5/',strrep(CurrentImageName,'.bmp',''));      
+        CreateTestResultFolder(TestName);
+
+        A=70;
+        for j=A:20:A
+            FixedPic_RGB = Daltonize_5(CurrentImage,Recolor_YIQ_2(CurrentImage),j);
+            SaveResults(CurrentImage,FixedPic_RGB,strcat(TestName,'/','Threashold_',num2str(j)),0);
+        end
+        
+        disp(strcat('done daltonize 5 test for:_',CurrentImageName));
+    end
+    disp('finished all daltonize 5 Tests');
 end
 
 function [ ] = Test_Increase_RG_Contrast_1(TestImagesList,ImagesCount)
