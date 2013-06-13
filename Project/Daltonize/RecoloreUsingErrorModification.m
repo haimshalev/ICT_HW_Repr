@@ -1,4 +1,4 @@
-function [ FixedPic_RGB ] = RecoloreUsingProjectionDistance( OriginalPic_RGB)
+function [ FixedPic_RGB ] = RecoloreUsingErrorModification( OriginalPic_RGB , err2mod)
 
 RGB = double(OriginalPic_RGB);
 sizeRGB = size(RGB) ;
@@ -7,10 +7,7 @@ sizeRGB = size(RGB) ;
 DichPic = protanopes(RGB);
 
 %calculate errors between two RGB values
-errorp = RGB - double(DichPic);
-
-%daltonize for p (modifying errors)
-err2mod = [0 0 0; .7 1 0; .7 0 1];
+errorp = abs(RGB - double(DichPic));
 
 ERR = zeros(sizeRGB);
 for i = 1:sizeRGB(1)
