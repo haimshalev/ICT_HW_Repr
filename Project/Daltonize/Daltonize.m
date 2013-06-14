@@ -1,4 +1,4 @@
-function [ Ifinal ] = Daltonize( OriginalPic_RGB )
+function [ Ifinal , fileinfo , folderInfo ] = Daltonize( OriginalPic_RGB )
 
 %% Initializing stage
 
@@ -7,23 +7,32 @@ close all
 M = [-1 0 0; 
       1 1 0; 
       1 0 1];
-        
+  
 %Choose between two mods of searching :
 %  1 - Going from a matrix which converts reds to white , to a matrix which converts reds to blue
 % -1 - Going from a matrix which converts reds to blue , to a matrix which converts red to white
 MSearchingMode = 1;
 
 %The amount of changing of M in each iteration
-ModificationConst = 0.15;
+ModificationConst = 0.05;
+
+%if we are in the seecond mod - update the matrix
+if(MSearchingMode == -1)
+    M(2,1) = M(2,1) - 7 * ModificationConst;
+    M(3,1) = M(3,1) + 7 * ModificationConst;
+end
 
 %Initialize the SimilarPixes flag
 ThereAreSimilarPixels = true;
 
 %Initialize the edge size of the similarity Checker
-EdgeSize = 7;
+InitialEdgeSize = 21;
+
+%The max size of iterations for one edge
+MaxEdgeIterations = 15;
 
 %Initialize an iterations counter
-iterations = 0;
+iterations = 1;
 
 %Display Figures for debuging
 dispFig = 0;
@@ -75,23 +84,19 @@ DichI3 = protanopes(I3);
 errorp = abs(I3 - double(DichI3));
 
 
+
 %% Start of iterations until a good reult will be found
+
+EdgeSize = InitialEdgeSize;
+err2mod = M;
+
 while (ThereAreSimilarPixels)
     
     %To avoid an infinity loop - we reducing the EdgeSize every X iterations
-    if( mod(iterations , 10)==0 && EdgeSize > 3)
+    if( mod(iterations , MaxEdgeIterations)==0 && EdgeSize > 3)
         
-        if (iterations ~= 0)
-            EdgeSize = EdgeSize -2;
-        end
-        
+        EdgeSize = EdgeSize -2;
         err2mod = M;
-        
-        %if we are in the seecond mod - update the matrix
-        if(MSearchingMode == -1)
-            err2mod(2,1) = err2mod(2,1) - 7 * ModificationConst;
-            err2mod(3,1) = err2mod(3,1) + 7 * ModificationConst;
-        end
         
     end
     
@@ -128,5 +133,8 @@ end
 Ifinal = uint8(Icorrect) + uint8(I4);
 if (dispFig), figure('Name','Ifinal');imshow(uint8(Ifinal)); end
 
+%return the name info about the reult
+folderInfo = ['Searching Mode ' ,num2str(MSearchingMode) ,' InitialEdgeSize ',num2str(InitialEdgeSize),' ModificationConst ',num2str(ModificationConst)];
+fileinfo = ['iter',num2str(iterations),'edge',num2str(EdgeSize)];
 end
 
