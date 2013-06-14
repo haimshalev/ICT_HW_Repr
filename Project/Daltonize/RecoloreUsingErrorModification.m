@@ -1,18 +1,11 @@
-function [ FixedPic_RGB ] = RecoloreUsingErrorModification( OriginalPic_RGB , err2mod)
+function [ FixedPic_RGB ] = RecoloreUsingErrorModification( OriginalPic_RGB ,ErrorPic , err2mod)
 
-RGB = double(OriginalPic_RGB);
-sizeRGB = size(RGB) ;
-
-%Simulate the image shown by dichromats
-DichPic = protanopes(RGB);
-
-%calculate errors between two RGB values
-errorp = abs(RGB - double(DichPic));
+sizeRGB = size(OriginalPic_RGB);
 
 ERR = zeros(sizeRGB);
 for i = 1:sizeRGB(1)
     for j = 1:sizeRGB(2)
-        err = errorp(i,j,:);
+        err = ErrorPic(i,j,:);
         err = err(:);
 
         ERR(i,j,:) = err2mod * err;
@@ -20,7 +13,7 @@ for i = 1:sizeRGB(1)
 end
 
 %Return the new improved recolored image
-FixedPic_RGB = uint8(RGB + ERR);
+FixedPic_RGB = uint8(OriginalPic_RGB + ERR);
 
 end
 
