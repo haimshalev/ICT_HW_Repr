@@ -1,4 +1,4 @@
-function [ Ifinal , fileinfo , folderInfo ] = Daltonize2( OriginalPic_RGB )
+function [ Ifinal , fileinfo , folderInfo ] = DaltonizeIterateOverColorsVector( OriginalPic_RGB )
 
 %% Initializing stage
 
@@ -45,8 +45,9 @@ QuantizationSize = 100;
 originalImage = double(OriginalPic_RGB);
 reshapedImage = reshape(originalImage,size(originalImage,1)*size(originalImage,2),size(originalImage,3));
 
-%Run Fuzzy - C- Means on the image
-tic;[cluster_centers , U , ~ ] = fcm(reshapedImage, QuantizationSize);toc
+%Create colors vector - consisting all colors in the pictures with a
+%distance greater the the initial EdgeSize
+cluster_centers = CreateColorsVector(originalImage , InitialEdgeSize);
 cluster_centers = reshape(cluster_centers,[size(cluster_centers,1) 1 3]);
 
 %Simulating what protanopes people see for the centers list
@@ -82,8 +83,6 @@ DichI3 = protanopes(Cincorrect);
 %calculate errors between two RGB values
 errorp = abs(Cincorrect - double(DichI3));
 
-
-
 %% Start of iterations until a good reult will be found for the incorrect colors
 
 EdgeSize = InitialEdgeSize;
@@ -115,37 +114,18 @@ while (ThereAreSimilarPixels)
     err2mod(2,1) = err2mod(2,1) -  MSearchingMode * ModificationConst;
     err2mod(3,1) = err2mod(3,1) +  MSearchingMode * ModificationConst;
       
-    disp(strcat('-------------- iteration- ',num2str(iterations-1),'---EdgeSize- ',num2str(EdgeSize),' -------------- '));    
+    disp(strcat('---- iteration- ',num2str(iterations-1),'---EdgeSize- ',num2str(EdgeSize),' ---- '));    
 end
 
 %% Produce the result image - replace in the original image, every color in Cincorrect with the corresponding color in Cdalton
     
-    
-    maxU = max(U);
-    
-    %Reshape I4 to vector again
-    Cdalton = reshape(Cdalton,[size(Cdalton,1) 3]);
-    Ccorrect = reshape(Ccorrect,[size(Ccorrect,1) 3]);
-    
-    %For each center
-    for i = 1:size(U,1)
-        
-        %Find the indeces of the pixel that close to the center
-        indeces = find(U(i,:) == maxU);
-        
-        %Produce the result image by setting:
-        %   Every color in Cincorrect with the corresponding color in Cdalton
-        %   Every color in Ccorrect with the same color
-        reshapedImage(indeces,:) = double(repmat(Cdalton(i,:),[size(indeces,2) 1])) + double(repmat(Ccorrect(i,:),[size(indeces,2) 1]));        
-
-    end
-
-%% Produce the result image and file path 
-
-Ifinal = uint8(reshape(reshapedImage,size(originalImage,1),size(originalImage,2),size(originalImage,3)));
+%Daltonize the image using the correction matrix that we found
+Ifinal = DaltonizeImageUsingChosenErrorModificationMatrix(OriginalPic_RGB,err2mod);
 if (dispFig), figure('Name','Ifinal');imshow(uint8(Ifinal)); end
 
+%% Produce the file path 
+
 %return the name info about the reult
-folderInfo = ['Quantization Size ', num2str(QuantizationSize) ,' Searching Mode ' ,num2str(MSearchingMode) ,' InitialEdgeSize ',num2str(InitialEdgeSize),' ModificationConst ',num2str(ModificationConst)];
+folderInfo = ['DalIterOverColorsVec - Searching Mode ' ,num2str(MSearchingMode) ,' InitialEdgeSize ',num2str(InitialEdgeSize),' ModificationConst ',num2str(ModificationConst)];
 fileinfo = ['iter',num2str(iterations),'edge',num2str(EdgeSize)];
 end
