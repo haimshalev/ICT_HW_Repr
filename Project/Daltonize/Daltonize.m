@@ -109,7 +109,7 @@ while (ThereAreSimilarPixels)
     if (dispFig), figure('Name','I5');imshow(uint8(I5));end
     
     %find similar pixels
-    ThereAreSimilarPixels = RGBSimilarityChecker(I5 , IcorrectColors , EdgeSize);
+    ThereAreSimilarPixels = RGBSimilarityChecker(CreateColorsVector(I5) , IcorrectColors , EdgeSize);
     
     %Keep counting iterations
     iterations = iterations + 1;
