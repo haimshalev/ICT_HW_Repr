@@ -1,4 +1,4 @@
-function [ Ifinal , fileinfo , folderInfo ] = Daltonize( OriginalPic_RGB )
+function [ Ifinal , fileinfo , folderInfo ] = DaltonizeIterateOverFullImage( OriginalPic_RGB )
 
 %% Initializing stage
 
@@ -75,7 +75,7 @@ if (dispFig), figure('Name','SimulatedIcorredt');imshow(uint8(simICorrect));end
 %For better performance we prepere the matrices that will be for all of
 %iterations before the while loop
 
-IcorrectColors = CreateColorsVector(Icorrect);
+IcorrectColors = CreateColorsVector(Icorrect , InitialEdgeSize);
 
 %Simulate the image shown by dichromats
 DichI3 = protanopes(I3);
@@ -109,7 +109,7 @@ while (ThereAreSimilarPixels)
     if (dispFig), figure('Name','I5');imshow(uint8(I5));end
     
     %find similar pixels
-    ThereAreSimilarPixels = RGBSimilarityChecker(CreateColorsVector(I5) , IcorrectColors , EdgeSize);
+    ThereAreSimilarPixels = RGBSimilarityChecker(CreateColorsVector(I5 , InitialEdgeSize) , IcorrectColors , EdgeSize);
     
     %Keep counting iterations
     iterations = iterations + 1;
@@ -134,7 +134,7 @@ Ifinal = uint8(Icorrect) + uint8(I4);
 if (dispFig), figure('Name','Ifinal');imshow(uint8(Ifinal)); end
 
 %return the name info about the reult
-folderInfo = ['Searching Mode ' ,num2str(MSearchingMode) ,' InitialEdgeSize ',num2str(InitialEdgeSize),' ModificationConst ',num2str(ModificationConst)];
+folderInfo = ['DalIterOverFullImg - Searching Mode ' ,num2str(MSearchingMode) ,' InitialEdgeSize ',num2str(InitialEdgeSize),' ModificationConst ',num2str(ModificationConst)];
 fileinfo = ['iter',num2str(iterations),'edge',num2str(EdgeSize)];
 end
 
