@@ -1,4 +1,4 @@
-function [colorsVector] = CreateColorsVector(image) 
+function [colorsVector] = CreateColorsVector(image , MaxDif) 
     
     tic;
 
@@ -14,8 +14,8 @@ function [colorsVector] = CreateColorsVector(image)
         j=1;        
         while(j<=size(colorsVector,1) && ~ColorExist)    %# foreach color in color-list
             Difference = abs( double(colorsVector(j,:)) - double(reshapedImage(i,:)) );  %# difference between image color to color-list color 
-            if max(Difference(:)) < 21
-                ColorExist = true;  %# if difference smaller then 21 then colors are equal
+            if max(Difference(:)) < MaxDif
+                ColorExist = true;  %# if difference smaller then MaxDif then colors are equal
             end
             j = j+1;
         end        
@@ -26,6 +26,8 @@ function [colorsVector] = CreateColorsVector(image)
     end
     
     colorsVector(size(colorsVector,1),:) = [];
+    
+    disp(['Create a color vector of ' ,num2str(size(colorsVector,1)), ' colors']);
     
     toc;
 end
