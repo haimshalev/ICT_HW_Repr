@@ -37,11 +37,6 @@ iterations = 1;
 %Display Figures for debuging
 dispFig = 0;
 
-%Set the quantizition size - used for the Fuzzy-C-Mean algo
-QuantizationSize = 100;
-
-%% Algorithm - Read an image and run Fuzzy-C-means.We name cluster centers the matrix containing our clusters’ centers
-
 originalImage = double(OriginalPic_RGB);
 reshapedImage = reshape(originalImage,size(originalImage,1)*size(originalImage,2),size(originalImage,3));
 
