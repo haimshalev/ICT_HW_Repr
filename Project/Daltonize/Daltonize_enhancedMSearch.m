@@ -14,10 +14,10 @@ ModificationConst = 0.01;
 
 % The base value of M (as ModificationConst multiplications)
 % searching for M around the base B,   e.g: M(2,1) = B, B+1, B-1, B+2, B-2, ... ,B+MaxIterations ,B-MaxIterations 
-ModificationBaseValueConst = 65;
+ModificationBaseValueConst = 30;
 
 %The max size of iterations for one edge
-MaxEdgeIterations = 55*2;
+MaxEdgeIterations = 30*2;
 
 M(2,1) = M(2,1) -  ModificationBaseValueConst * ModificationConst;
 M(3,1) = M(3,1) +  ModificationBaseValueConst * ModificationConst;
@@ -29,7 +29,7 @@ ThereAreSimilarPixels = true;
 CreateColorsVector_EdgeSize = 19;
 
 %Initialize the edge size of the similarity Checker
-InitialEdgeSize = 21;
+InitialEdgeSize = 50;
 
 %Initialize an iterations counter
 iterations = 1;
@@ -37,13 +37,7 @@ iterations = 1;
 %Display Figures for debuging
 dispFig = 0;
 
-%Set the quantizition size - used for the Fuzzy-C-Mean algo
-QuantizationSize = 100;
-
-%% Algorithm - Read an image and run Fuzzy-C-means.We name cluster centers the matrix containing our clusters’ centers
-
 originalImage = double(OriginalPic_RGB);
-reshapedImage = reshape(originalImage,size(originalImage,1)*size(originalImage,2),size(originalImage,3));
 
 %Create colors vector - consisting all colors in the pictures with a
 %distance greater the the initial EdgeSize
@@ -97,7 +91,7 @@ while (ThereAreSimilarPixels)
     if( mod(iterations , MaxEdgeIterations)==0 && EdgeSize > 3)      
         EdgeSize = EdgeSize -2;
         err2mod = M; 
-	M_SearchCounter = 1;
+        M_SearchCounter = 1;
     end
 	
     % change the err2mod around the base, maintaining image energy
