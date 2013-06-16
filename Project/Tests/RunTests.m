@@ -18,7 +18,8 @@ function [ ] = RunTests()
         Test_Daltonize_2(TestImagesList,ImagesCount); 
         Test_Daltonize_3(TestImagesList,ImagesCount); 
         Test_Daltonize_4(TestImagesList,ImagesCount); 
-
+        Test_Daltonize_5(TestImagesList,ImagesCount); 
+        
         Test_Increase_RG_Contrast_1(TestImagesList,ImagesCount); 
         Test_Increase_RG_Contrast_2(TestImagesList,ImagesCount); 
         Test_Increase_RG_Contrast_3(TestImagesList,ImagesCount);
@@ -31,16 +32,19 @@ function [ ] = RunTests()
         SmoothTransformTest();
         GaussianConvolution_MaxValue_1_Test();
         BadPixelsRecognition1_Test();
-    else  
-        Test_Daltonize_5(TestImagesList,ImagesCount); 
+        
+        Test_Daltonize_enhancedMSearch(TestImagesList,ImagesCount); 
+        Test_DaltonizeIterateOverColorsVector(TestImagesList,ImagesCount);
+        Test_DaltonizeNoEnergyPreservation(TestImagesList,ImagesCount);
+        Test_ZahisDazltonize(TestImagesList,ImagesCount);
+    else
+        Test_Daltonize_enhancedMSearch(TestImagesList,ImagesCount); 
     end
-    
-    
-    
        
     disp('TheEnd!');
     
 end
+
 function [ ] = BadPixelsRecognition1_Test(TestImagesList,ImagesCount)
     for ii=1:ImagesCount
         CurrentImageName = TestImagesList(ii).name;
@@ -71,8 +75,6 @@ function [ ] = BadPixelsRecognition1_Test(TestImagesList,ImagesCount)
     end
     disp('finished all daltonize 1 Tests');
 end
-
-
 function [ ] = GaussianConvolution_MaxValue_1_Test()
     Temp = zeros(20,20); 
     
@@ -88,7 +90,6 @@ function [ ] = GaussianConvolution_MaxValue_1_Test()
     
     disp('done testing GaussianConvolution_MaxValue_1');
 end
-
 function [ ] = SmoothTransformTest()
     Temp1 = zeros(100,100,3);    Temp1(:,:,1) = 0.2;     Temp1(:,:,3) = 0.3;    Temp1(:,:,2) = 0.5;   
     Temp2 = zeros(100,100,3);    Temp2(:,:,1) = 0.6;    Temp2(:,:,3) = 0.4;    Temp2(:,:,2) = 0.1;
@@ -111,7 +112,6 @@ function [ ] = SmoothTransformTest()
     figure('name','HSV Smoothnes','NumberTitle','off');    Temp3 = SmoothTransform( rgb2hsv(Temp1) , rgb2hsv(Temp2), 0.5,0.25,0.125 );    imshow(hsv2rgb(Temp3));
     
 end
-
 function [ ] = Test_Recoloring(TestImagesList,ImagesCount)    
     for ii=1:ImagesCount
         CurrentImageName = TestImagesList(ii).name;
@@ -447,10 +447,40 @@ function [ ] = Final_Test_4(TestImagesList,ImagesCount)
     disp('finished all Final 4 Tests');
 end
 
-
-
-
-
-
-
+function [ ] = Test_Daltonize_enhancedMSearch(TestImagesList,ImagesCount)   
+    TestName = 'Daltonize enhanced M Search/';      
+    CreateTestResultFolder(TestName);    
+    for ii=1:ImagesCount
+        CurrentImageName = TestImagesList(ii).name;
+        CurrentImage = imread(CurrentImageName);
+               
+        [FixedPic , fileinfo , ~] = Daltonize_enhancedMSearch(CurrentImage);
+        SaveResults(CurrentImage,FixedPic,strcat(TestName,strcat(strrep(CurrentImageName,'.bmp',''),'_',fileinfo)),0);
+    end
+    disp('finished Test_Daltonize_enhancedMSearch');
+end
+function [ ] = Test_DaltonizeIterateOverColorsVector(TestImagesList,ImagesCount)   
+    TestName = 'Paper Daltonize/';      
+    CreateTestResultFolder(TestName);    
+    for ii=1:ImagesCount
+        CurrentImageName = TestImagesList(ii).name;
+        CurrentImage = imread(CurrentImageName);
+        
+        [FixedPic , fileinfo , ~] = DaltonizeIterateOverColorsVector(CurrentImage);
+        SaveResults(CurrentImage,FixedPic,strcat(TestName,strcat(strrep(CurrentImageName,'.bmp',''),'_',fileinfo)),0);
+    end
+    disp('finished Test_Daltonize');
+end
+function [ ] = Test_DaltonizeNoEnergyPreservation(TestImagesList,ImagesCount)   
+    TestName = 'Paper Daltonize NO Enegry/';      
+    CreateTestResultFolder(TestName);    
+    for ii=1:ImagesCount
+        CurrentImageName = TestImagesList(ii).name;
+        CurrentImage = imread(CurrentImageName);
+        
+        [FixedPic , fileinfo , ~] = DaltonizeNoEnergyPreservation(CurrentImage);
+        SaveResults(CurrentImage,FixedPic,strcat(TestName,strcat(strrep(CurrentImageName,'.bmp',''),'_',fileinfo)),0);
+    end
+    disp('finished Test_DaltonizeNoEnergyPreservation');
+end
 

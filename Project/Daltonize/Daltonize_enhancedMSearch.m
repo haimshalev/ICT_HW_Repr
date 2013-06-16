@@ -14,10 +14,10 @@ ModificationConst = 0.01;
 
 % The base value of M (as ModificationConst multiplications)
 % searching for M around the base B,   e.g: M(2,1) = B, B+1, B-1, B+2, B-2, ... ,B+MaxIterations ,B-MaxIterations 
-ModificationBaseValueConst = 30;
+ModificationBaseValueConst = 35;
 
 %The max size of iterations for one edge
-MaxEdgeIterations = 30*2;
+MaxEdgeIterations = 35*2;
 
 M(2,1) = M(2,1) -  ModificationBaseValueConst * ModificationConst;
 M(3,1) = M(3,1) +  ModificationBaseValueConst * ModificationConst;
