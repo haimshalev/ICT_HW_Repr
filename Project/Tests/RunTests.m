@@ -6,44 +6,64 @@ function [ ] = RunTests()
     TestImagesList = dir('Test subjects/*.bmp');    % run this command from "Tests" folder
     ImagesCount = length(TestImagesList);           % Number of files found
     
-    TestAll = false;
-    if TestAll
-        Test_Recoloring(TestImagesList,ImagesCount);
-    
-        Test_RedRecognotion1(TestImagesList,ImagesCount);
-        Test_RedRecognotion2(TestImagesList,ImagesCount);
 
-        Test_Daltonize_1(TestImagesList,ImagesCount);
-        Test_Daltonize_YIQ(TestImagesList,ImagesCount);
-        Test_Daltonize_2(TestImagesList,ImagesCount); 
-        Test_Daltonize_3(TestImagesList,ImagesCount); 
-        Test_Daltonize_4(TestImagesList,ImagesCount); 
-        Test_Daltonize_5(TestImagesList,ImagesCount); 
-        
-        Test_Increase_RG_Contrast_1(TestImagesList,ImagesCount); 
-        Test_Increase_RG_Contrast_2(TestImagesList,ImagesCount); 
-        Test_Increase_RG_Contrast_3(TestImagesList,ImagesCount);
-        
-        Final_Test_1(TestImagesList,ImagesCount);
-        Final_Test_2(TestImagesList,ImagesCount);
-        Final_Test_3(TestImagesList,ImagesCount);
-        Final_Test_4(TestImagesList,ImagesCount);
-        
-        SmoothTransformTest();
-        GaussianConvolution_MaxValue_1_Test();
-        BadPixelsRecognition1_Test();
-        
-        Test_Daltonize_enhancedMSearch(TestImagesList,ImagesCount); 
+    if false   
         Test_DaltonizeIterateOverColorsVector(TestImagesList,ImagesCount);
-        Test_DaltonizeNoEnergyPreservation(TestImagesList,ImagesCount);
-        Test_ZahisDazltonize(TestImagesList,ImagesCount);
-    else
         Test_Daltonize_enhancedMSearch(TestImagesList,ImagesCount); 
+        Test_DaltonizeNoEnergyPreservation(TestImagesList,ImagesCount);
     end
+    
+    Test_Daltonize_enhancedMSearch(TestImagesList,ImagesCount);
+    Test_DaltonizeNoEnergyPreservation(TestImagesList,ImagesCount);
        
     disp('TheEnd!');
     
 end
+
+
+
+function [ ] = Test_Daltonize_enhancedMSearch(TestImagesList,ImagesCount)   
+    TestName = 'Daltonize enhanced M Search/';      
+    CreateTestResultFolder(TestName);    
+    for ii=1:ImagesCount
+        CurrentImageName = TestImagesList(ii).name;
+        CurrentImage = imread(CurrentImageName);
+               
+        [FixedPic , fileinfo , ~] = Daltonize_enhancedMSearch(CurrentImage);
+        SaveResults(CurrentImage,FixedPic,strcat(TestName,strcat(strrep(CurrentImageName,'.bmp',''),'_',fileinfo)),0);
+    end
+    disp('finished Test_Daltonize_enhancedMSearch');
+end
+function [ ] = Test_DaltonizeIterateOverColorsVector(TestImagesList,ImagesCount)   
+    TestName = 'Paper Daltonize/';      
+    CreateTestResultFolder(TestName);    
+    for ii=1:ImagesCount
+        CurrentImageName = TestImagesList(ii).name;
+        CurrentImage = imread(CurrentImageName);
+        
+        [FixedPic , fileinfo , ~] = DaltonizeIterateOverColorsVector(CurrentImage);
+        SaveResults(CurrentImage,FixedPic,strcat(TestName,strcat(strrep(CurrentImageName,'.bmp',''),'_',fileinfo)),0);
+    end
+    disp('finished Test_Daltonize');
+end
+function [ ] = Test_DaltonizeNoEnergyPreservation(TestImagesList,ImagesCount)   
+    TestName = 'Paper Daltonize NO Enegry/';      
+    CreateTestResultFolder(TestName);    
+    for ii=1:ImagesCount
+        CurrentImageName = TestImagesList(ii).name;
+        CurrentImage = imread(CurrentImageName);
+        
+        [FixedPic , fileinfo , ~] = DaltonizeNoEnergyPreservation(CurrentImage);
+        SaveResults(CurrentImage,FixedPic,strcat(TestName,strcat(strrep(CurrentImageName,'.bmp',''),'_',fileinfo)),0);
+    end
+    disp('finished Test_DaltonizeNoEnergyPreservation');
+end
+
+
+
+
+%------------------------------------- Old Tests -------------------------------------
+%{
 
 function [ ] = BadPixelsRecognition1_Test(TestImagesList,ImagesCount)
     for ii=1:ImagesCount
@@ -446,41 +466,7 @@ function [ ] = Final_Test_4(TestImagesList,ImagesCount)
     end
     disp('finished all Final 4 Tests');
 end
+%}
 
-function [ ] = Test_Daltonize_enhancedMSearch(TestImagesList,ImagesCount)   
-    TestName = 'Daltonize enhanced M Search/';      
-    CreateTestResultFolder(TestName);    
-    for ii=1:ImagesCount
-        CurrentImageName = TestImagesList(ii).name;
-        CurrentImage = imread(CurrentImageName);
-               
-        [FixedPic , fileinfo , ~] = Daltonize_enhancedMSearch(CurrentImage);
-        SaveResults(CurrentImage,FixedPic,strcat(TestName,strcat(strrep(CurrentImageName,'.bmp',''),'_',fileinfo)),0);
-    end
-    disp('finished Test_Daltonize_enhancedMSearch');
-end
-function [ ] = Test_DaltonizeIterateOverColorsVector(TestImagesList,ImagesCount)   
-    TestName = 'Paper Daltonize/';      
-    CreateTestResultFolder(TestName);    
-    for ii=1:ImagesCount
-        CurrentImageName = TestImagesList(ii).name;
-        CurrentImage = imread(CurrentImageName);
-        
-        [FixedPic , fileinfo , ~] = DaltonizeIterateOverColorsVector(CurrentImage);
-        SaveResults(CurrentImage,FixedPic,strcat(TestName,strcat(strrep(CurrentImageName,'.bmp',''),'_',fileinfo)),0);
-    end
-    disp('finished Test_Daltonize');
-end
-function [ ] = Test_DaltonizeNoEnergyPreservation(TestImagesList,ImagesCount)   
-    TestName = 'Paper Daltonize NO Enegry/';      
-    CreateTestResultFolder(TestName);    
-    for ii=1:ImagesCount
-        CurrentImageName = TestImagesList(ii).name;
-        CurrentImage = imread(CurrentImageName);
-        
-        [FixedPic , fileinfo , ~] = DaltonizeNoEnergyPreservation(CurrentImage);
-        SaveResults(CurrentImage,FixedPic,strcat(TestName,strcat(strrep(CurrentImageName,'.bmp',''),'_',fileinfo)),0);
-    end
-    disp('finished Test_DaltonizeNoEnergyPreservation');
-end
+
 
