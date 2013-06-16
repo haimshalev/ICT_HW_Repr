@@ -1,35 +1,35 @@
-function [ Ifinal , fileinfo , folderInfo ] = DaltonizeIterateOverColorsVector( OriginalPic_RGB )
+function [ Ifinal , fileinfo , folderInfo ] = Daltonize_enhancedMSearch( OriginalPic_RGB )
 
 %% Initializing stage
 
-close all
+close all;
+
 %daltonize for p (modifying errors)
 M = [-1 0 0; 
       1 1 0; 
       1 0 1];
-  
-%Choose between two mods of searching :
-%  1 - Going from a matrix which converts reds to white , to a matrix which converts reds to blue
-% -1 - Going from a matrix which converts reds to blue , to a matrix which converts red to white
-MSearchingMode = 1;
 
 %The amount of changing of M in each iteration
-ModificationConst = 0.05;
+ModificationConst = 0.01;
 
-%if we are in the seecond mod - update the matrix
-if(MSearchingMode == -1)
-    M(2,1) = M(2,1) - 10 * ModificationConst;
-    M(3,1) = M(3,1) + 10 * ModificationConst;
-end
+% The base value of M (as ModificationConst multiplications)
+% searching for M around the base B,   e.g: M(2,1) = B, B+1, B-1, B+2, B-2, ... ,B+MaxIterations ,B-MaxIterations 
+ModificationBaseValueConst = 35;
+
+%The max size of iterations for one edge
+MaxEdgeIterations = 35*2;
+
+M(2,1) = M(2,1) -  ModificationBaseValueConst * ModificationConst;
+M(3,1) = M(3,1) +  ModificationBaseValueConst * ModificationConst;
 
 %Initialize the SimilarPixes flag
 ThereAreSimilarPixels = true;
 
-%Initialize the edge size of the similarity Checker
-InitialEdgeSize = 21;
+%Initialize the edge size for CreateColorsVector()
+CreateColorsVector_EdgeSize = 19;
 
-%The max size of iterations for one edge
-MaxEdgeIterations = 10;
+%Initialize the edge size of the similarity Checker
+InitialEdgeSize = 50;
 
 %Initialize an iterations counter
 iterations = 1;
@@ -38,11 +38,10 @@ iterations = 1;
 dispFig = 0;
 
 originalImage = double(OriginalPic_RGB);
-reshapedImage = reshape(originalImage,size(originalImage,1)*size(originalImage,2),size(originalImage,3));
 
 %Create colors vector - consisting all colors in the pictures with a
 %distance greater the the initial EdgeSize
-cluster_centers = CreateColorsVector(originalImage , InitialEdgeSize);
+cluster_centers = CreateColorsVector(originalImage , CreateColorsVector_EdgeSize);
 cluster_centers = reshape(cluster_centers,[size(cluster_centers,1) 1 3]);
 
 %Simulating what protanopes people see for the centers list
@@ -83,16 +82,23 @@ errorp = abs(Cincorrect - double(DichI3));
 EdgeSize = InitialEdgeSize;
 err2mod = M;
 
+% init the counter for current search to 1 (init to 1 for each EdgeSize)
+M_SearchCounter = 1;
+
 while (ThereAreSimilarPixels)
     
     %To avoid an infinity loop - we reducing the EdgeSize every X iterations
-    if( mod(iterations , MaxEdgeIterations)==0 && EdgeSize > 3)
-        
+    if( mod(iterations , MaxEdgeIterations)==0 && EdgeSize > 3)      
         EdgeSize = EdgeSize -2;
-        err2mod = M;
-        
+        err2mod = M; 
+        M_SearchCounter = 1;
     end
-    
+	
+    % change the err2mod around the base, maintaining image energy
+    BaseShift = ( floor(M_SearchCounter/2) ) * ( power(-1,M_SearchCounter) );
+    err2mod(2,1) = err2mod(2,1) -  BaseShift * ModificationConst;
+    err2mod(3,1) = err2mod(3,1) +  BaseShift * ModificationConst;    
+
     %Run daltonize function on the image that needs daltonize (I3)
     Cdalton = RecoloreUsingErrorModification(Cincorrect ,errorp, err2mod);
 
@@ -104,10 +110,7 @@ while (ThereAreSimilarPixels)
     
     %Keep counting iterations
     iterations = iterations + 1;
-    
-    % change the err2mod , maintaining image energy 
-    err2mod(2,1) = err2mod(2,1) -  MSearchingMode * ModificationConst;
-    err2mod(3,1) = err2mod(3,1) +  MSearchingMode * ModificationConst;
+    M_SearchCounter = M_SearchCounter + 1;
       
     disp(strcat('---- iteration- ',num2str(iterations-1),'---EdgeSize- ',num2str(EdgeSize),' ---- '));    
 end
@@ -121,6 +124,6 @@ if (dispFig), figure('Name','Ifinal');imshow(uint8(Ifinal)); end
 %% Produce the file path 
 
 %return the name info about the reult
-folderInfo = ['DalIterOverColorsVec - Searching Mode ' ,num2str(MSearchingMode) ,' InitialEdgeSize ',num2str(InitialEdgeSize),' ModificationConst ',num2str(ModificationConst)];
-fileinfo = ['iter',num2str(iterations),'edge',num2str(EdgeSize)];
+folderInfo = ['DalIterOverColorsVec_InitialEdgeSize ',num2str(InitialEdgeSize),'_ModificationConst ',num2str(ModificationConst)];
+fileinfo = ['_iter',num2str(iterations),'_edge',num2str(EdgeSize),'_MBaseShift',num2str(ModificationBaseValueConst)];
 end

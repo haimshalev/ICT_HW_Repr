@@ -25,6 +25,8 @@ Iand = Iand(:,:,1) | Iand(:,:,2) | Iand(:,:,3);
 Iand = repmat(Iand , [1 1 3]);
 if (dispFig), figure('Name','Iand');imshow(uint8(Iand*255));end
 
+Iand = BlurTreshold(Iand);
+
 %Finding the image that needs to daltonized
 I3 = I1 .* Iand;
 if (dispFig), figure('Name','I3');imshow(uint8(I3));end
