@@ -5,58 +5,25 @@ function [ ] = RunTests()
 
     TestImagesList = dir('Test subjects/*.bmp');    % run this command from "Tests" folder
     ImagesCount = length(TestImagesList);           % Number of files found
-    
-
-    if false   
-        Test_DaltonizeIterateOverColorsVector(TestImagesList,ImagesCount);
-        Test_Daltonize_enhancedMSearch(TestImagesList,ImagesCount); 
-        Test_DaltonizeNoEnergyPreservation(TestImagesList,ImagesCount);
-    end
-    
-    Test_Daltonize_enhancedMSearch(TestImagesList,ImagesCount);
-    Test_DaltonizeNoEnergyPreservation(TestImagesList,ImagesCount);
+       
+    Test_ColorBlindFix(TestImagesList,ImagesCount);
        
     disp('TheEnd!');
     
 end
 
 
-
-function [ ] = Test_Daltonize_enhancedMSearch(TestImagesList,ImagesCount)   
-    TestName = 'Daltonize enhanced M Search/';      
-    CreateTestResultFolder(TestName);    
-    for ii=1:ImagesCount
-        CurrentImageName = TestImagesList(ii).name;
-        CurrentImage = imread(CurrentImageName);
-               
-        [FixedPic , fileinfo , ~] = Daltonize_enhancedMSearch(CurrentImage);
-        SaveResults(CurrentImage,FixedPic,strcat(TestName,strcat(strrep(CurrentImageName,'.bmp',''),'_',fileinfo)),0);
-    end
-    disp('finished Test_Daltonize_enhancedMSearch');
-end
-function [ ] = Test_DaltonizeIterateOverColorsVector(TestImagesList,ImagesCount)   
-    TestName = 'Paper Daltonize/';      
+function [ ] = Test_ColorBlindFix(TestImagesList,ImagesCount)   
+    TestName = 'ColorBlindFix/';      
     CreateTestResultFolder(TestName);    
     for ii=1:ImagesCount
         CurrentImageName = TestImagesList(ii).name;
         CurrentImage = imread(CurrentImageName);
         
-        [FixedPic , fileinfo , ~] = DaltonizeIterateOverColorsVector(CurrentImage);
+        [FixedPic , fileinfo , ~] = ColorBlindFix(1,CurrentImage);
         SaveResults(CurrentImage,FixedPic,strcat(TestName,strcat(strrep(CurrentImageName,'.bmp',''),'_',fileinfo)),0);
     end
-    disp('finished Test_Daltonize');
-end
-function [ ] = Test_DaltonizeNoEnergyPreservation(TestImagesList,ImagesCount)   
-    TestName = 'Paper Daltonize NO Enegry/';      
-    CreateTestResultFolder(TestName);    
-    for ii=1:ImagesCount
-        CurrentImageName = TestImagesList(ii).name;
-        CurrentImage = imread(CurrentImageName);
-        
-        [FixedPic , fileinfo , ~] = DaltonizeNoEnergyPreservation(CurrentImage);
-        SaveResults(CurrentImage,FixedPic,strcat(TestName,strcat(strrep(CurrentImageName,'.bmp',''),'_',fileinfo)),0);
-    end
-    disp('finished Test_DaltonizeNoEnergyPreservation');
+    disp('finished ColorBlindFix');
 end
 
 
