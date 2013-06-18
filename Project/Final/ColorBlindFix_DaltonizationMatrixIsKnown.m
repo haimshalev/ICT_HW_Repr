@@ -34,7 +34,7 @@ Icorrect = I1 .* ~Iand;
 if (dispFig), figure('Name','Icorrect');imshow(uint8(Icorrect));end
 
 %Simulate the image shown by dichromats
-DichI3 = SImulateColorBlindImage(ColorBlindType,I3);
+DichI3 = SimulateColorBlindImage(ColorBlindType,I3);
 
 %calculate errors between two RGB values
 errorp = abs(I3 - double(DichI3));
