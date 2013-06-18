@@ -22,7 +22,7 @@ function varargout = ColorCorrectionForColorBlind(varargin)
 
 % Edit the above text to modify the response to help ColorCorrectionForColorBlind
 
-% Last Modified by GUIDE v2.5 18-Jun-2013 23:28:28
+% Last Modified by GUIDE v2.5 19-Jun-2013 00:28:06
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -216,4 +216,3 @@ else
   
     
 end
-
