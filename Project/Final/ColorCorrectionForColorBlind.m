@@ -22,7 +22,7 @@ function varargout = ColorCorrectionForColorBlind(varargin)
 
 % Edit the above text to modify the response to help ColorCorrectionForColorBlind
 
-% Last Modified by GUIDE v2.5 18-Jun-2013 22:25:24
+% Last Modified by GUIDE v2.5 18-Jun-2013 23:28:28
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -85,7 +85,21 @@ function openFile_ClickedCallback(hObject, eventdata, handles)
 %if the user chose a file to work with 
 if (filename ~= 0)
     %load the image to workspace variable
-    assignin('base', 'importedImg', imread(strcat(pathname,filename),'bmp'));
+    image = imread(strcat(pathname,filename),'bmp');
+    assignin('base', 'importedImg',image);
+    
+    %Show the selected image on figure 1
+    axes(handles.figure_1()); % this is used to set focus on the axes
+     %currently in use
+    imshow(image);
+    
+    %reset figures
+    axes(handles.figure_2());imshow(0);
+    axes(handles.figure_3());imshow(0);
+    axes(handles.figure_4());imshow(0);
+    
+    %Enable the run buttom 
+    set(handles.button_run(),'Enable','on');
 end
 
 
@@ -113,6 +127,12 @@ if (strcmp(e,'on'))
     set(otherRadio, 'Enable', 'off');
     otherRadio = handles.rb_tritanopic();
     set(otherRadio, 'Enable', 'off');
+    
+    %Change the figure labels accordingly
+    set(handles.text_fig2(),'String','Protanopes Simulation');
+    set(handles.text_fig3(),'String','Deuteranopes Simulation');
+    set(handles.text_fig4(),'String','Tritanopic Simulation');
+    
 else
     %Enable the Dichromats radio button panel and options
     otherRadio = handles.rb_protanopes();
@@ -121,4 +141,79 @@ else
     set(otherRadio, 'Enable', 'on');
     otherRadio = handles.rb_tritanopic();
     set(otherRadio, 'Enable', 'on');
+    
+    %Change the figure labels accordingly
+    set(handles.text_fig2(),'String','Simulated Image');
+    set(handles.text_fig3(),'String','Daltonized Image');
+    set(handles.text_fig4(),'String','Daltonized Simulated Image');
+    
 end
+
+%reset figures
+axes(handles.figure_2());imshow(0);
+axes(handles.figure_3());imshow(0);
+axes(handles.figure_4());imshow(0);
+
+
+% --- Executes on button press in button_run.
+function button_run_Callback(hObject, eventdata, handles)
+% hObject    handle to button_run (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+%Get the importe img variable 
+image = evalin('base','importedImg');
+
+%reset figures
+axes(handles.figure_2());imshow(0);
+axes(handles.figure_3());imshow(0);
+axes(handles.figure_4());imshow(0);
+
+%Update the figures differntly in consideretion of the mode
+
+%if we are in simulate mode
+if (get(handles.rb_simulate,'Value') == 1)
+    
+    %Show the selected image on figure 2
+    axes(handles.figure_2());
+    imshow(SimulateColorBlindImage( 1 , image ));
+
+    %Show the selected image on figure 3
+    axes(handles.figure_3());
+    imshow(SimulateColorBlindImage( 2 , image ));
+
+    %Show the selected image on figure 4
+    axes(handles.figure_4());
+    imshow(SimulateColorBlindImage( 3 , image ));
+  
+%if we are in daltonize mode
+else
+    
+    %Get the current dichromat type
+    if (get(handles.rb_protanopes(),'Value'))
+        type = 1;
+    elseif (get(handles.rb_deuteranopes(),'Value'))
+        type = 2;
+    else 
+        type = 3;
+    end
+    
+    
+    %Show the simulated image of figure 2
+    axes(handles.figure_2());
+    imshow(SimulateColorBlindImage( type , image ));
+    
+    
+    %Show the daltonized image on figure 3    
+    axes(handles.figure_3());
+    %Daltonize
+    [ Ifinal , fileinfo , folderInfo ] = ColorBlindFix( type , image ); 
+    imshow(Ifinal);
+
+    %Show the daltonized and simulated image on figure 4
+    axes(handles.figure_4());
+    imshow(SimulateColorBlindImage( type , Ifinal ));
+  
+    
+end
+
