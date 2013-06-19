@@ -22,7 +22,7 @@ function varargout = ColorCorrectionForColorBlind(varargin)
 
 % Edit the above text to modify the response to help ColorCorrectionForColorBlind
 
-% Last Modified by GUIDE v2.5 19-Jun-2013 18:54:09
+% Last Modified by GUIDE v2.5 19-Jun-2013 20:07:51
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -244,4 +244,3 @@ if (filename ~= 0)
     
     disp(['--- Saved Snapshot to : ' pathname filename] );
 end
-
