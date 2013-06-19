@@ -1,4 +1,14 @@
-function [RGBModifiedImg,ProjectionDistanceMatrix] = tritanopic( srcImg )
+function [RGBModifiedImg] = tritanopic( srcImg )
+%% Summary
+
+%{
+    This function simulate what tritanopic color blind people see
+
+    This function get the LMS points which normal observers and tritanopic see
+    the same and then calls the Simulating algorithm 
+%}
+
+disp('--- Simulate what tritanopic color blind people see'); 
 
 %% Get the points that looks the same.
 
@@ -14,14 +24,11 @@ XYZtoLMS = [ 0.8951  0.2664 -0.1614;
             -0.7502  1.7135  0.0367;
              0.0389 -0.0685  1.0296];
  
-%Calculating the points from cones cmf
-%SamePoints(:,1) = cones(116,:)'; %485nm
-%SamePoints(:,2) = cones(291,:)'; %660nm
-
+%Getting the LMS stimuli values from an rgb values        
 SamePoints(:,1) = XYZtoLMS*(XYZtoRGB\([0 229 255]'));%485nm
 SamePoints(:,2) = XYZtoLMS*(XYZtoRGB\([255 0 0]'));%660nm
 
 %% Run the simulating algorithm with this custom matrices
-[RGBModifiedImg,ProjectionDistanceMatrix] = SimulatingAlgorithm(srcImg,SamePoints,'tritanopic');
+[RGBModifiedImg] = SimulatingAlgorithm(srcImg,SamePoints,'tritanopic');
 
 end

@@ -1,4 +1,16 @@
-function [ RGBModifedImg , ProjectionDistanceMatrix ] = SimulatingAlgorithm( srcImg , xyzPoints , type)
+function [ RGBModifedImg ] = SimulatingAlgorithm( srcImg , xyzPoints , type)
+%% Summary
+
+%{
+    A generic function which gets a color blind type,image and similar stimuli vectors 
+    and return a simulated picture of what the color blind person will see
+
+    Types Included:
+        ColorBlindType = 1  for protanopes
+        ColorBlindType = 2  for deuteranopes
+        ColorBlindType = 3  for tritanopic
+%}
+
 %% Prepere Picture
 
 srcImg = double(srcImg);
@@ -49,7 +61,6 @@ Se = whiteLMS(3);
 
 %Initialize the xyzModifiedImg
 LMSModifiedImg = zeros(size(LMSImg));
-ProjectionDistanceMatrix = zeros(size(LMSImg,2) , 1);
 
 %for each pixel we will find the line between the chromacity value to the
 %Confusion point
@@ -82,8 +93,6 @@ for i=1:1:n
         LMSModifiedImg(2,i) = Mq;
         LMSModifiedImg(3,i) = Sq;
         
-        %Update the projection distance
-        ProjectionDistanceMatrix(i) = abs(LMSModifiedImg(1,i) - LMSImg(1,i));
         
     else if (strcmp(type,'deuteranopes') == 1)
             %Finding the monochromatic index according to the specific color
@@ -107,9 +116,7 @@ for i=1:1:n
             LMSModifiedImg(1,i) = Lq;
             LMSModifiedImg(2,i) = -(a*Lq + c*Sq)/b;
             LMSModifiedImg(3,i) = Sq;
-            
-            %Update the projection distance
-            ProjectionDistanceMatrix(i) = abs(LMSModifiedImg(2,i) - LMSImg(2,i));
+
             
         else if (strcmp(type,'tritanopic') == 1)
                 %Finding the monochromatic index according to the specific color
@@ -135,9 +142,7 @@ for i=1:1:n
                 LMSModifiedImg(1,i) = Lq;
                 LMSModifiedImg(2,i) = Mq;
                 LMSModifiedImg(3,i) = -(a*Lq + b*Mq)/c;
-                
-                %Update the projection distance
-                ProjectionDistanceMatrix(i) = abs(LMSModifiedImg(3,i) - LMSImg(3,i));
+
             end
         end
     end
@@ -154,7 +159,6 @@ RGBModifedImg = XYZtoRGB * XYZModifiedImg;
  
 %% Restore the original Image
 
-ProjectionDistanceMatrix = reshape(ProjectionDistanceMatrix',[sizeImage(1) sizeImage(2) 1]);
 RGBModifedImg = reshape(RGBModifedImg',[sizeImage(1) sizeImage(2) sizeImage(3)]);
 RGBModifedImg = uint8(RGBModifedImg);
 
