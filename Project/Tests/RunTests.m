@@ -6,8 +6,19 @@ function [ ] = RunTests()
     TestImagesList = dir('Test subjects/*.bmp');    % run this command from "Tests" folder
     ImagesCount = length(TestImagesList);           % Number of files found
        
-    Test_ColorBlindFix(TestImagesList,ImagesCount,2);
-       
+    Test_ColorBlindFix(TestImagesList,ImagesCount,1);
+    
+    %{
+    M = zeros(10,10);
+    M(4,5) = 1;
+    M(4,7) = 1;
+    M(5,5) = 1;
+    M(5,6) = 1;
+    M(2,2) = 1
+    
+    D = FixAnomalies(M,0)
+    %}
+    
     disp('TheEnd!');
     
 end
@@ -19,9 +30,10 @@ function [ ] = Test_ColorBlindFix(TestImagesList,ImagesCount,ColorBlindType)
     for ii=1:ImagesCount
         CurrentImageName = TestImagesList(ii).name;
         CurrentImage = imread(CurrentImageName);
-        
+
         [FixedPic , fileinfo , ~] = ColorBlindFix(ColorBlindType,CurrentImage);
         SaveResults(CurrentImage,FixedPic,strcat(TestName,strcat(strrep(CurrentImageName,'.bmp',''),'_',fileinfo)),0,ColorBlindType);
+        
     end
     disp('finished ColorBlindFix');
 end
