@@ -244,8 +244,18 @@ function saveFigure_ClickedCallback(hObject, eventdata, handles)
 
 %if the user not canceled and choose a file name and path 
 if (filename ~= 0)
-    %Save the figure
-    saveas(gcf,[pathname filename], 'bmp');
+    %Save the figures    
+    export_fig([pathname '(Screenshot) ' filename], '-bmp',gcf);
+    
+if (get(handles.rb_simulate,'Value') == 1)
+    export_fig([pathname '(Protanopes Simulated) ' filename], '-bmp',handles.figure_2());
+    export_fig([pathname '(deuteranopes Simulated) ' filename], '-bmp',handles.figure_3());
+    export_fig([pathname '(tritanopic Simulated) ' filename], '-bmp',handles.figure_4());
+else
+    export_fig([pathname '(Simulated) ' filename], '-bmp',handles.figure_2());
+    export_fig([pathname '(Daltonized) ' filename], '-bmp',handles.figure_3());
+    export_fig([pathname '(Daltonized Simulated) ' filename], '-bmp',handles.figure_4());
+end
     
     disp(['--- Saved Snapshot to : ' pathname filename] );
 end
