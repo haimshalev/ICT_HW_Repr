@@ -1,7 +1,16 @@
 function [ Ifinal , fileinfo , folderInfo ] = ColorBlindFix( ColorBlindType, OriginalPic_RGB )
-%# ColorBlindType = 1  for protanopes
-%# ColorBlindType = 2  for deuteranopes
-%# ColorBlindType = 3  for tritanopic
+%% Summary
+
+%{
+    A generic function which gets a color blind type and an image.  
+    Returns a daltonize image and debug information about the result:
+        ModificationConst,EdgeSize,Iterations...
+
+    Types supported:
+        ColorBlindType = 1  for protanopes
+        ColorBlindType = 2  for deuteranopes
+        ColorBlindType = 3  for tritanopic
+%}
  
 %% Initializing stage
 
@@ -26,13 +35,14 @@ InitialEdgeSize = 50;
 %Initialize an iterations counter
 iterations = 1;
 
-%Display Figures for debuging
-dispFig = 0;
+disp(['--- Start daltonizing image with: ModificationConst=' num2str(ModificationConst) ' InitialEdgeSize=' num2str(InitialEdgeSize)]); 
+
+%% Create colors vectors
 
 originalImage = double(OriginalPic_RGB);
 
 %Create colors vector - consisting all colors in the pictures with a
-%distance greater the the initial EdgeSize
+%distance greater the the CreateColorsVector_EdgeSize
 cluster_centers = CreateColorsVector(originalImage , CreateColorsVector_EdgeSize);
 cluster_centers = reshape(cluster_centers,[size(cluster_centers,1) 1 3]);
 
@@ -40,6 +50,8 @@ cluster_centers = reshape(cluster_centers,[size(cluster_centers,1) 1 3]);
 simulated_centers = SimulateColorBlindImage(ColorBlindType,cluster_centers);
 
 %% Classify each color from cluster centers, as belonging to Ccorrect or Cincorrect
+
+disp('--- Classify each color from the color vector, as belonging to Ccorrect or Cincorrect');
 
 %calculate errors between two RGB values
 E = abs(cluster_centers - double(simulated_centers));
@@ -69,10 +81,12 @@ DichI3 = SimulateColorBlindImage(ColorBlindType,Cincorrect);
 %calculate errors between two RGB values
 errorp = abs(Cincorrect - double(DichI3));
 
-%% Start of iterations until a good reult will be found for the incorrect colors
+%% Start of iterations until a good transformation matrix will be found
 
 EdgeSize = InitialEdgeSize;
 err2mod = M;
+
+disp('--- Start searching transformation matrix');
 
 while (ThereAreSimilarPixels)
     
@@ -80,6 +94,8 @@ while (ThereAreSimilarPixels)
     if( mod(iterations , MaxEdgeIterations)==0 && EdgeSize > 3)      
         EdgeSize = EdgeSize -2;
         err2mod = M; 
+        
+        disp(strcat('---- Current iteration: ',num2str(iterations),' EdgeSize: ',num2str(EdgeSize)));
     end
 
     %Run daltonize function on the image that needs daltonize (I3)
@@ -95,18 +111,19 @@ while (ThereAreSimilarPixels)
     iterations = iterations + 1;
     
     % Adjust Daltonization Matrix according to Color Blind Type 
-    err2mod = AdjustDaltonizationMatrix(ColorBlindType,err2mod,ModificationConst);  
-      
-    disp(strcat('---- iteration- ',num2str(iterations-1),'---EdgeSize- ',num2str(EdgeSize),' ---- '));    
+    err2mod = AdjustDaltonizationMatrix(ColorBlindType,err2mod,ModificationConst);     
 end
 
-%% Produce the result image - replace in the original image, every color in Cincorrect with the corresponding color in Cdalton
-    
+disp(['--- Transformation matrix found in ' num2str(iterations) ' iterations']);
+
+%% Produce the result image - by daltonizing the image using the founded transformation matrix
+
+disp('--- Produce the result image by daltonizing the image using the founded transformation matrix');
+
 %Daltonize the image using the correction matrix that we found
-I2 = SimulateColorBlindImage(ColorBlindType,originalImage);    %# Simulating what protanopes people see
-E = abs(originalImage - double(I2));                           %# calculate errors between two RGB values
+I2 = SimulateColorBlindImage(ColorBlindType,originalImage);    % Simulating what protanopes people see
+E = abs(originalImage - double(I2));                           % calculate errors between two RGB values
 Ifinal = uint8( Daltonize(originalImage,E,err2mod) );
-if (dispFig), figure('Name','Ifinal');imshow(uint8(Ifinal)); end
 
 %% Produce the file path 
 

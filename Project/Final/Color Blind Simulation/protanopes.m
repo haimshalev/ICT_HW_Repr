@@ -8,8 +8,6 @@ function [ RGBModifiedImg ] = protanopes( srcImg )
     the same and then calls the Simulating algorithm 
 %}
 
-disp('--- Simulate what protanopes color blind people see'); 
-
 %% Get the points that looks the same
 
 % Normal observers and both protanopes and deuteranopes see 

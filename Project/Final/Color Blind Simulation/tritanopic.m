@@ -8,8 +8,6 @@ function [RGBModifiedImg] = tritanopic( srcImg )
     the same and then calls the Simulating algorithm 
 %}
 
-disp('--- Simulate what tritanopic color blind people see'); 
-
 %% Get the points that looks the same.
 
 load('cones.mat');

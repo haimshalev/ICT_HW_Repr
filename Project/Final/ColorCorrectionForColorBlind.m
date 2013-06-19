@@ -166,7 +166,7 @@ function button_run_Callback(hObject, eventdata, handles)
 %Get the importe img variable 
 image = evalin('base','importedImg');
 
-clc;disp('Procedure Started');tic
+clc;disp('- Procedure Started');tic
 
 %reset figures
 axes(handles.figure_2());imshow(0);
@@ -178,18 +178,21 @@ axes(handles.figure_4());imshow(0);
 %if we are in simulate mode
 if (get(handles.rb_simulate,'Value') == 1)
     
-    disp('- Start Simulating what every color blind people see');
+    disp('-- Start Simulating what every color blind people see');
     
     %Show the selected image on figure 2
     axes(handles.figure_2());
+    disp('--- Simulate what protanopes color blind people see');
     imshow(SimulateColorBlindImage( 1 , image ));
 
     %Show the selected image on figure 3
     axes(handles.figure_3());
+    disp('--- Simulate what deuteranopes color blind people see');
     imshow(SimulateColorBlindImage( 2 , image ));
 
     %Show the selected image on figure 4
     axes(handles.figure_4());
+    disp('--- Simulate what tritanopic color blind people see'); 
     imshow(SimulateColorBlindImage( 3 , image ));
   
 %if we are in daltonize mode
@@ -197,36 +200,38 @@ else
         
     %Get the current dichromat type
     if (get(handles.rb_protanopes(),'Value'))
-        disp('- Daltonize image for protanopes blind people');
+        typeName = 'protanopes';
         type = 1;
     elseif (get(handles.rb_deuteranopes(),'Value'))
-        disp('- Daltonize image for deuteranopes blind people');
+        typeName = 'deuteranopes';
         type = 2;
     else 
-        disp('- Daltonize image for tritanopic blind people');
+        typeName = 'tritanopic';
         type = 3;
     end
     
     
     %Show the simulated image of figure 2
+    disp(['--- Simulate what ' typeName ' color blind people see']);
     axes(handles.figure_2());
     imshow(SimulateColorBlindImage( type , image ));
     
     
-    %Show the daltonized image on figure 3    
+    %Show the daltonized image on figure 3
+    disp(['--- Daltonize image for ' typeName ' blind people']);
     axes(handles.figure_3());
-    %Daltonize
     [ Ifinal , fileinfo , folderInfo ] = ColorBlindFix( type , image ); 
     imshow(Ifinal);
 
     %Show the daltonized and simulated image on figure 4
+    disp(['--- Simulate what ' typeName ' color blind people see']); 
     axes(handles.figure_4());
     imshow(SimulateColorBlindImage( type , Ifinal ));
   
     
 end
 
-disp(['Procedure Ended in ' num2str(toc) ' seconds']);
+disp(['- Procedure Ended in ' num2str(toc) ' seconds']);
 
 % --- Save the gui to bmp file
 function saveFigure_ClickedCallback(hObject, eventdata, handles)
