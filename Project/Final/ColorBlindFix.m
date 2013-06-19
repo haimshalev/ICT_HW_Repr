@@ -14,7 +14,7 @@ function [ Ifinal , fileinfo , folderInfo ] = ColorBlindFix( ColorBlindType, Ori
  
 %% Initializing stage
 
-%daltonize for p (modifying errors)
+%Get the current ErrorModification Matrix
 M = GetDaltonizationMatrix( ColorBlindType );
  
 %The amount of changing of M in each iteration
@@ -43,30 +43,30 @@ originalImage = double(OriginalPic_RGB);
 
 %Create colors vector - consisting all colors in the pictures with a
 %distance greater the the CreateColorsVector_EdgeSize
-cluster_centers = CreateColorsVector(originalImage , CreateColorsVector_EdgeSize);
-cluster_centers = reshape(cluster_centers,[size(cluster_centers,1) 1 3]);
+colorsVector = CreateColorsVector(originalImage , CreateColorsVector_EdgeSize);
+colorsVector = reshape(colorsVector,[size(colorsVector,1) 1 3]);
 
-%Simulating what protanopes people see for the centers list
-simulated_centers = SimulateColorBlindImage(ColorBlindType,cluster_centers);
+%Simulating what color blind people see for the centers list
+simulatedColorsVector = SimulateColorBlindImage(ColorBlindType,colorsVector);
 
-%% Classify each color from cluster centers, as belonging to Ccorrect or Cincorrect
+%% Classify each color from the color vector, as belonging to Ccorrect or Cincorrect
 
 disp('--- Classify each color from the color vector, as belonging to Ccorrect or Cincorrect');
 
 %calculate errors between two RGB values
-E = abs(cluster_centers - double(simulated_centers));
+E = abs(colorsVector - double(simulatedColorsVector));
     
-%Creating a binary mask  - ones in the places that needs daltonize and
+%Creating a binary mask  - ones for the colors that needs daltonize and
 %zeros in the rest
 Cand = (E > 55);
 Cand = Cand(:,:,1) | Cand(:,:,2) | Cand(:,:,3);
 Cand = repmat(Cand , [1 1 3]);
 
 %Finding the colors that needs to daltonized
-Cincorrect = cluster_centers .* Cand;
+Cincorrect = colorsVector .* Cand;
 
 %Finding the colors that don't need daltonize - the complement of I3
-Ccorrect = cluster_centers .* ~Cand;
+Ccorrect = colorsVector .* ~Cand;
 
 %% Optimizing Performance 
 
@@ -98,14 +98,14 @@ while (ThereAreSimilarPixels)
         disp(strcat('---- Current iteration: ',num2str(iterations),' EdgeSize: ',num2str(EdgeSize)));
     end
 
-    %Run daltonize function on the image that needs daltonize (I3)
+    %Run daltonize function on the image that needs daltonize (Cincorrect)
     Cdalton = Daltonize(Cincorrect ,errorp, err2mod);
 
     %Simulating what protanopes people see
-    Cprotanope = SimulateColorBlindImage(ColorBlindType,Cdalton);
+    Csimulated = SimulateColorBlindImage(ColorBlindType,Cdalton);
     
     %find similar pixels
-    ThereAreSimilarPixels = CheckColorIntersection(reshape(Cprotanope,size(Cprotanope,1)*size(Cprotanope,2),size(Cprotanope,3)) , IcorrectColors , EdgeSize);
+    ThereAreSimilarPixels = CheckColorIntersection(reshape(Csimulated,size(Csimulated,1)*size(Csimulated,2),size(Csimulated,3)) , IcorrectColors , EdgeSize);
     
     %Keep counting iterations
     iterations = iterations + 1;
@@ -121,7 +121,7 @@ disp(['--- Transformation matrix found in ' num2str(iterations) ' iterations']);
 disp('--- Produce the result image by daltonizing the image using the founded transformation matrix');
 
 %Daltonize the image using the correction matrix that we found
-I2 = SimulateColorBlindImage(ColorBlindType,originalImage);    % Simulating what protanopes people see
+I2 = SimulateColorBlindImage(ColorBlindType,originalImage);    % Simulating what color blind people see
 E = abs(originalImage - double(I2));                           % calculate errors between two RGB values
 Ifinal = uint8( Daltonize(originalImage,E,err2mod) );
 
