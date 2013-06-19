@@ -6,12 +6,30 @@ function [ ] = RunTests()
     TestImagesList = dir('Test subjects/*.bmp');    % run this command from "Tests" folder
     ImagesCount = length(TestImagesList);           % Number of files found
        
-    Test_ColorBlindFix(TestImagesList,ImagesCount,2);
-       
-    disp('TheEnd!');
+    Test_ColorBlindFix(TestImagesList,ImagesCount,1);
+    %ChangeImageName(TestImagesList,ImagesCount);
     
+    disp('TheEnd!');
 end
 
+function [ ] = ChangeImageName(TestImagesList,ImagesCount)   
+    TestName = 'NewName/';      
+    CreateTestResultFolder(TestName);  
+    FileName = 1;
+    for ii=1:ImagesCount
+        CurrentImageName = TestImagesList(ii).name;
+        CurrentImage = imread(CurrentImageName);
+        
+        [SizeX,SizeY,SizeZ] = size(CurrentImage);      
+        if (SizeX >= 30) && (SizeY >= 30) && (SizeZ >= 3)
+            newName = strcat('Test results/',TestName,num2str(FileName),'_.bmp');
+            copyfile(strcat('Test subjects/',CurrentImageName),newName);
+            FileName = FileName + 1;
+        end
+      
+    end
+    disp('finished Changing name');
+end
 
 function [ ] = Test_ColorBlindFix(TestImagesList,ImagesCount,ColorBlindType)   
     TestName = 'ColorBlindFix/';      
@@ -19,9 +37,10 @@ function [ ] = Test_ColorBlindFix(TestImagesList,ImagesCount,ColorBlindType)
     for ii=1:ImagesCount
         CurrentImageName = TestImagesList(ii).name;
         CurrentImage = imread(CurrentImageName);
-        
+
         [FixedPic , fileinfo , ~] = ColorBlindFix(ColorBlindType,CurrentImage);
         SaveResults(CurrentImage,FixedPic,strcat(TestName,strcat(strrep(CurrentImageName,'.bmp',''),'_',fileinfo)),0,ColorBlindType);
+        
     end
     disp('finished ColorBlindFix');
 end

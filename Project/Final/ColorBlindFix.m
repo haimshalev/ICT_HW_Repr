@@ -103,7 +103,9 @@ end
 %% Produce the result image - replace in the original image, every color in Cincorrect with the corresponding color in Cdalton
     
 %Daltonize the image using the correction matrix that we found
-Ifinal = ColorBlindFix_DaltonizationMatrixIsKnown(ColorBlindType,OriginalPic_RGB,err2mod);
+I2 = SimulateColorBlindImage(ColorBlindType,originalImage);    %# Simulating what protanopes people see
+E = abs(originalImage - double(I2));                           %# calculate errors between two RGB values
+Ifinal = uint8( Daltonize(originalImage,E,err2mod) );
 if (dispFig), figure('Name','Ifinal');imshow(uint8(Ifinal)); end
 
 %% Produce the file path 
