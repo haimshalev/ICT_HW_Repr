@@ -100,6 +100,8 @@ if (filename ~= 0)
     
     %Enable the run buttom 
     set(handles.button_run(),'Enable','on');
+    
+    disp(['--- Loaded: ' filename ' , with size ' int2str(size(image,1)) 'X' int2str(size(image,2))]);
 end
 
 
@@ -164,6 +166,8 @@ function button_run_Callback(hObject, eventdata, handles)
 %Get the importe img variable 
 image = evalin('base','importedImg');
 
+clc;disp('Procedure Started');tic
+
 %reset figures
 axes(handles.figure_2());imshow(0);
 axes(handles.figure_3());imshow(0);
@@ -217,6 +221,7 @@ else
     
 end
 
+disp('Procedure Ended');toc
 
 % --- Save the gui to bmp file
 function saveFigure_ClickedCallback(hObject, eventdata, handles)
@@ -231,4 +236,7 @@ function saveFigure_ClickedCallback(hObject, eventdata, handles)
 if (filename ~= 0)
     %Save the figure
     saveas(gcf,[pathname filename], 'bmp');
+    
+    disp(['--- Saved Snapshot to : ' pathname filename] );
 end
+
