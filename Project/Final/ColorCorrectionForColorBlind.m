@@ -178,6 +178,8 @@ axes(handles.figure_4());imshow(0);
 %if we are in simulate mode
 if (get(handles.rb_simulate,'Value') == 1)
     
+    disp('- Start Simulating what every color blind people see');
+    
     %Show the selected image on figure 2
     axes(handles.figure_2());
     imshow(SimulateColorBlindImage( 1 , image ));
@@ -192,13 +194,16 @@ if (get(handles.rb_simulate,'Value') == 1)
   
 %if we are in daltonize mode
 else
-    
+        
     %Get the current dichromat type
     if (get(handles.rb_protanopes(),'Value'))
+        disp('- Daltonize image for protanopes blind people');
         type = 1;
     elseif (get(handles.rb_deuteranopes(),'Value'))
+        disp('- Daltonize image for deuteranopes blind people');
         type = 2;
     else 
+        disp('- Daltonize image for tritanopic blind people');
         type = 3;
     end
     
