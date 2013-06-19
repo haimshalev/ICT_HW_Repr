@@ -5,8 +5,6 @@ function [ Ifinal , fileinfo , folderInfo ] = ColorBlindFix( ColorBlindType, Ori
  
 %% Initializing stage
 
-%close all
-
 %daltonize for p (modifying errors)
 M = GetDaltonizationMatrix( ColorBlindType );
  
