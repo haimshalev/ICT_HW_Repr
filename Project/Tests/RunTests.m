@@ -7,22 +7,29 @@ function [ ] = RunTests()
     ImagesCount = length(TestImagesList);           % Number of files found
        
     Test_ColorBlindFix(TestImagesList,ImagesCount,1);
-    
-    %{
-    M = zeros(10,10);
-    M(4,5) = 1;
-    M(4,7) = 1;
-    M(5,5) = 1;
-    M(5,6) = 1;
-    M(2,2) = 1
-    
-    D = FixAnomalies(M,0)
-    %}
+    %ChangeImageName(TestImagesList,ImagesCount);
     
     disp('TheEnd!');
-    
 end
 
+function [ ] = ChangeImageName(TestImagesList,ImagesCount)   
+    TestName = 'NewName/';      
+    CreateTestResultFolder(TestName);  
+    FileName = 1;
+    for ii=1:ImagesCount
+        CurrentImageName = TestImagesList(ii).name;
+        CurrentImage = imread(CurrentImageName);
+        
+        [SizeX,SizeY,SizeZ] = size(CurrentImage);      
+        if (SizeX >= 30) && (SizeY >= 30) && (SizeZ >= 3)
+            newName = strcat('Test results/',TestName,num2str(FileName),'_.bmp');
+            copyfile(strcat('Test subjects/',CurrentImageName),newName);
+            FileName = FileName + 1;
+        end
+      
+    end
+    disp('finished Changing name');
+end
 
 function [ ] = Test_ColorBlindFix(TestImagesList,ImagesCount,ColorBlindType)   
     TestName = 'ColorBlindFix/';      
