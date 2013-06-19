@@ -22,7 +22,7 @@ function varargout = ColorCorrectionForColorBlind(varargin)
 
 % Edit the above text to modify the response to help ColorCorrectionForColorBlind
 
-% Last Modified by GUIDE v2.5 19-Jun-2013 00:28:06
+% Last Modified by GUIDE v2.5 19-Jun-2013 18:54:09
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -58,7 +58,7 @@ handles.output = hObject;
 guidata(hObject, handles);
 
 % UIWAIT makes ColorCorrectionForColorBlind wait for user response (see UIRESUME)
-% uiwait(handles.figure1);
+% uiwait(handles.gui);
 
 % --- Outputs from this function are returned to the command line.
 function varargout = ColorCorrectionForColorBlind_OutputFcn(hObject, eventdata, handles) 
@@ -215,4 +215,20 @@ else
     imshow(SimulateColorBlindImage( type , Ifinal ));
   
     
+end
+
+
+% --- Save the gui to bmp file
+function saveFigure_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to saveFigure (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+%Get from the user the output folder and prefix of files
+[filename, pathname] = uiputfile({'*.bmp','bmp files'},'Save Images');
+
+%if the user not canceled and choose a file name and path 
+if (filename ~= 0)
+    %Save the figure
+    saveas(gcf,[pathname filename], 'bmp');
 end
