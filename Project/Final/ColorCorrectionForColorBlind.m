@@ -221,7 +221,7 @@ else
     
 end
 
-disp('Procedure Ended');toc
+disp(['Procedure Ended in ' num2str(toc) ' seconds']);
 
 % --- Save the gui to bmp file
 function saveFigure_ClickedCallback(hObject, eventdata, handles)
