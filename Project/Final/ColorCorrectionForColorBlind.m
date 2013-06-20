@@ -41,6 +41,8 @@ if nargout
 else
     gui_mainfcn(gui_State, varargin{:});
 end
+AddMandatoryFolders();
+
 % End initialization code - DO NOT EDIT
 
 % --- Executes just before ColorCorrectionForColorBlind is made visible.
