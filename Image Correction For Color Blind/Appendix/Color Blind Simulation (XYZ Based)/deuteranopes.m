@@ -1,0 +1,28 @@
+function [ RGBModifiedImg ] = deuteranopes( srcImg )
+
+%% Get the points that looks the same
+
+load('xyz.mat');
+
+%Normal observers and both protanopes and deuteranopes see 
+%the same blue at 470 nm and the same yellow at 575 nm
+SamePoints(:,1) =  xyz(101,:)'; %470nm
+SamePoints(:,2) = xyz(206,:)'; %575nm
+
+%Transform this XYZ points to xyz points
+
+%Converting this values to xyz
+sumPoints = sum(SamePoints,1);
+
+xyzPoints = zeros(3,2);
+for i=1:1:2
+    xyzPoints(:,i) = SamePoints(:,i)./sumPoints(i);
+end
+
+%% Create Confusion Point for deuteranopes
+ConfusionPoint = [1.080 -0.080]';
+
+%% Run the simulating algorithm with this custom matrices
+RGBModifiedImg = SimulatingAlgorithm(srcImg,xyzPoints,ConfusionPoint);
+
+end
