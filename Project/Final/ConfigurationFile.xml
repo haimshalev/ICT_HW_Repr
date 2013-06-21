@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--ColorCorrectionForColorBlind- configurator-->
+<ColorCorrectionForColorBlind>
+  
+  <!-- All the mandatory folders relative paths that the project needs  -->
+  <MandatoryFolderPaths>
+    <folder>Color Blind Simulation</folder>
+    <folder>Daltonize</folder>
+    <folder>Misc</folder>
+  </MandatoryFolderPaths>
+  
+  <!-- Every subProject configuration-->
+ 
+</ColorCorrectionForColorBlind>
