@@ -7,7 +7,7 @@ function [colorsVector] = CreateColorsVector(image , MaxDif)
 %}  
 
 %% Create Colors
-disp(['---- Start creating color vector']);
+disp(['---- Start creating color vector  0%']);
 tic;
 
 %Reshape the image to 2 dimensional
@@ -18,8 +18,14 @@ colorsVector = [0 0 0];
 
 % if the current color isn't in our color list , add it
 % for each color in image
-for i=1:size(reshapedImageLab,1)
+ColorsCount = size(reshapedImageLab,1);
+for i=1:ColorsCount
     
+    % print progress (percentile)
+    if (mod( floor(i/ColorsCount*100) ,3 ) == 0) && (floor(i/ColorsCount*100) > 9)
+        fprintf('\b\b\b\b\b %d%% ',floor(i/ColorsCount*100));
+    end
+        
     % assume color is not in list    
     ColorExist = false;                                                             
     j=1;       
@@ -43,7 +49,6 @@ for i=1:size(reshapedImageLab,1)
        % add color to color-List
        colorsVector = [reshapedImageLab(i,:) ; colorsVector];    
     end
-
 end
 
 %Remove the zero stimuli
@@ -53,6 +58,7 @@ colorsVector(size(colorsVector,1),:) = [];
 colorsVector = Lab2RGB(reshape(colorsVector,[size(colorsVector,1) 1 3]));
 colorsVector = double(reshape(colorsVector,[size(colorsVector,1) 3]));
 
+fprintf('\b\b\b\b\b %d%% \n',100);
 disp(['---- Created a color vector of ' ,num2str(size(colorsVector,1)), ' colors at ' num2str(toc) ' seconds']);
 
 end
