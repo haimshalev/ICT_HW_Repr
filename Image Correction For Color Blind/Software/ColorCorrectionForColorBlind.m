@@ -41,6 +41,7 @@ if nargout
 else
     gui_mainfcn(gui_State, varargin{:});
 end
+addpath(genpath('Misc'));
 AddMandatoryFolders();
 
 % End initialization code - DO NOT EDIT
