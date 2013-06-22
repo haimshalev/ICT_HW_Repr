@@ -3,7 +3,10 @@ function [ ] = ColorCorrectionDemo()
 %# Color blind simulation image for Protanopes , Deuteranopes and Tritanopic
 %# Daltonize image for Protanopes , Deuteranopes and Tritanopic
 %# Daltonized simulate image for Protanopes , Deuteranopes and Tritanopic 
-
+    
+    %# Turn all warnings off 
+    warning ('off','all');
+    
     % add all necessary files to matlab path
     addpath(genpath('Misc'));
     AddMandatoryFolders();
@@ -29,9 +32,9 @@ function [ ] = ColorBlindFixAndPlot(OriginalImage_RGB, FigureName)
 
 
     % simulate color blinds for Protanopes , Deuteranopes and Tritanopic
-    ProtanopesSimulated = simulateColorBlindImage(1,OriginalImage_RGB);
-    DeuteranopesSimulated = simulateColorBlindImage(2,OriginalImage_RGB);
-    TritanopicSimulated = simulateColorBlindImage(3,OriginalImage_RGB);
+    ProtanopesSimulated = SimulateColorBlindImage(1,OriginalImage_RGB);
+    DeuteranopesSimulated = SimulateColorBlindImage(2,OriginalImage_RGB);
+    TritanopicSimulated = SimulateColorBlindImage(3,OriginalImage_RGB);
     
     % Daltonize for Protanopes , Deuteranopes and Tritanopic
     ProtanopesDaltonized = ColorBlindFix(1,OriginalImage_RGB);
@@ -39,9 +42,9 @@ function [ ] = ColorBlindFixAndPlot(OriginalImage_RGB, FigureName)
     TritanopicDaltonized = ColorBlindFix(3,OriginalImage_RGB);
     
     % simulate daltonize image for Protanopes , Deuteranopes and Tritanopic
-    ProtanopesDaltonizeSimulated = simulateColorBlindImage(1,ProtanopesDaltonized);
-    DeuteranopesDaltonizeSimulated = simulateColorBlindImage(2,DeuteranopesDaltonized);
-    TritanopicDaltonizeSimulated = simulateColorBlindImage(3,TritanopicDaltonized);
+    ProtanopesDaltonizeSimulated = SimulateColorBlindImage(1,ProtanopesDaltonized);
+    DeuteranopesDaltonizeSimulated = SimulateColorBlindImage(2,DeuteranopesDaltonized);
+    TritanopicDaltonizeSimulated = SimulateColorBlindImage(3,TritanopicDaltonized);
     
     % plot results
     hFig = figure('Name',FigureName,'NumberTitle','off');
