@@ -1,5 +1,6 @@
 Daltonize Algorithm Readme File:
 
+Our code implements the Daltonize algorithm which defined in the project documentation file.
 This readme file explains what each function in this folder those:
 
 *******************************************************************************************************
