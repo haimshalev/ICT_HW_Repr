@@ -1,17 +1,15 @@
+function [ ] = DichromatsSimulation( importedImg )
 %% Summary
 
 %{
-This Script will simulate what each class of dichromats see.
-It will :
-    1)load a testing picture
-    2)run the simulating algorithm for each dichrmat type (3 types)
-    3)show the results
+A function which simulate what each class of dichromats see.
+	It will :
+    		1)run the simulating algorithm for each dichrmat type (3 types)
+    		2)show the results
+	
+	Input: importedImg - A 3-dimensional matrix representing the RGB values of the original image
 %}
 
-%% Prepere Picture
-
-%Load the flowers Image
-importedImg = imread('natural_flowers.bmp');
 
 %% Run the simulating algorithms
 
@@ -26,3 +24,4 @@ subplot(2,2,1), imshow(importedImg) ,title('Real one');
 subplot(2,2,2), imshow(ProtanopesImg)  ,title('Protanopes Image');
 subplot(2,2,3), imshow(DeuteranopesImg)  ,title('Deuteranopes Image');
 subplot(2,2,4), imshow(TritanopicImg)  ,title('Tritanopic Image');
+end

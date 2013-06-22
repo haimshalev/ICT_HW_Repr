@@ -3,12 +3,11 @@ function [ SimulatedImage ] = SimulateColorBlindImage( ColorBlindType , RGBImage
 
 %{
     A generic function which gets a color blind type and an image
-    Simulate what the color blind person will see
-
-    Types Included:
-        ColorBlindType = 1  for protanopes
-        ColorBlindType = 2  for deuteranopes
-        ColorBlindType = 3  for tritanopic
+	It simulates what the color blind person will see
+	
+	Input: ColorBlindType - 1  for protanopes, 2  for deuteranopes, 3 for tritanopic
+	       RGBImage - A 3-dimensional matrix representing the RGB values of the original image
+	Output: SimulatedImage - A 3-dimensional matrix representing the RGB values of the simulated image
 %}
 
     if ColorBlindType == 1      

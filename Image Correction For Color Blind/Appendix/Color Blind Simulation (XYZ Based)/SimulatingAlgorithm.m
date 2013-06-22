@@ -1,4 +1,17 @@
 function [ RGBModifedImg ] = SimulatingAlgorithm( srcImg , xyzPoints , ConfusionPoint )
+%% Summary
+
+%{
+    A generic function which gets a color blind type,image and similar stimuli vectors 
+	and return a simulated picture of what the color blind person will see using simulation algorithm on the xy color space
+	! This function should not called by the user - It should only run from the [3,4,5] functions listed above.
+
+	Input: srcImg- A 3-dimensional matrix representing the RGB values of the original image
+	       xyzPoints - xyz stimuli which normal observers and the color blind observer see the same  
+	       type- 1  for protanopes, 2  for deuteranopes, 3 for tritanopic
+	Output: RGBModifedImg - A 3-dimensional matrix representing the RGB values of the simulated image
+%}
+
 %% Prepere Picture
 
 srcImg = double(srcImg);

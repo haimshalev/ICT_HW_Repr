@@ -1,4 +1,14 @@
 function [ RGBModifiedImg ] = tritanopic( srcImg )
+%% Summary
+
+%{
+    This function simulate what tritanopic color blind people see
+	This function sets the xyz points which normal observers and tritanopic see
+	the same and then calls the Simulating algorithm 
+
+	Input: srcImg - A 3-dimensional matrix representing the RGB values of the original image
+	Output: RGBModifiedImg - A 3-dimensional matrix representing the RGB values of the simulated image
+%}
 
 %% Get the points that looks the same.
 
