@@ -1,14 +1,14 @@
-function [ RGBModifedImg ] = SimulatingAlgorithm( srcImg , xyzPoints , type)
+function [ RGBModifedImg ] = SimulatingAlgorithm( srcImg , samePoints , type)
 %% Summary
 
 %{
     A generic function which gets a color blind type,image and similar stimuli vectors 
-    and return a simulated picture of what the color blind person will see
+    and return a simulated picture of what the color blind person will see using simulation algorithm on the LMS color space
 
-    Types Included:
-        ColorBlindType = 1  for protanopes
-        ColorBlindType = 2  for deuteranopes
-        ColorBlindType = 3  for tritanopic
+    Input: srcImg- A 3-dimensional matrix representing the RGB values of the original image
+	   samePoints- LMS stimuli which normal observers and the color blind observer see the same  
+	   type- 1  for protanopes, 2  for deuteranopes, 3 for tritanopic
+    Output: RGBModifedImg - A 3-dimensional matrix representing the RGB values of the simulated image
 %}
 
 %% Prepere Picture
@@ -81,7 +81,7 @@ for i=1:1:n
         end
 
         %Getting the stimulus values of this monochromatic light
-        La = xyzPoints(1,idx); Ma = xyzPoints(2,idx); Sa = xyzPoints(3,idx); 
+        La = samePoints(1,idx); Ma = samePoints(2,idx); Sa = samePoints(3,idx); 
 
         %calulatin a b & c
         a = Me*Sa - Se*Ma;
@@ -105,7 +105,7 @@ for i=1:1:n
             end
 
             %Getting the stimulus values of this monochromatic light
-            La = xyzPoints(1,idx); Ma = xyzPoints(2,idx); Sa = xyzPoints(3,idx); 
+            La = samePoints(1,idx); Ma = samePoints(2,idx); Sa = samePoints(3,idx); 
 
             %calulatin a b & c
             a = Me*Sa - Se*Ma;
@@ -131,7 +131,7 @@ for i=1:1:n
                 end
 
                 %Getting the stimulus values of this monochromatic light
-                La = xyzPoints(1,idx); Ma = xyzPoints(2,idx); Sa = xyzPoints(3,idx); 
+                La = samePoints(1,idx); Ma = samePoints(2,idx); Sa = samePoints(3,idx); 
 
                 %calulatin a b & c
                 a = Me*Sa - Se*Ma;

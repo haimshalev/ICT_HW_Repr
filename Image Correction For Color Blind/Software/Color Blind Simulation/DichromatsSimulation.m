@@ -2,11 +2,12 @@ function [ ] = DichromatsSimulation( importedImg )
 %% Summary
 
 %{
-This Script will simulate what each class of dichromats see.
-It will :
-    1)load a testing picture
-    2)run the simulating algorithm for each dichrmat type (3 types)
-    3)show the results
+    A function which simulate what each class of dichromats see.
+	It will :
+    		1)run the simulating algorithm for each dichrmat type (3 types)
+    		2)show the results
+	
+	Input: importedImg - A 3-dimensional matrix representing the RGB values of the original image
 %}
 
 
