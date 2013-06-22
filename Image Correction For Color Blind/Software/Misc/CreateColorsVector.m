@@ -2,8 +2,11 @@ function [colorsVector] = CreateColorsVector(image , MaxDif)
 %% Summary
 
 %{
-    Create colors vector - consisting all colors in image with a
-    distance greater the the MaxDif
+    Create colors vector - consisting all colors in image with an LAB distance greater the the MaxDif
+	
+	Input:image- A 3-dimensional matrix representing the RGB values of an image
+	      MaxDif- The allowed lab distance between two pixel in the ouput colors matrix
+	Output: colorsVector - A 3-dimensional matrix representing the quantize list of the colors in the imput image(RGB)
 %}  
 
 %% Create Colors

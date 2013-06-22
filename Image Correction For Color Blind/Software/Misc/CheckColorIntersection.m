@@ -1,24 +1,26 @@
-function [ FoundSimilarity ] = CheckColorIntersection( I5Colors , IcorrectColors , EdgeSize )
+function [ FoundSimilarity ] = CheckColorIntersection( Colors1 , Colors2 , EdgeSize )
 %% Summary
 
 %{
-    CheckColorIntersection - Check if each color in I5Colors in near to
-    color in IcorrectColors. We say that a color in near to other color if
-    the LAB distance between them is lower than the EdgeSize param.
+    Check if there is no color in I5Colors that is close to color in IcorrectColors.
+	We say that a color in near to other color if the LAB distance between them is lower than the EdgeSize param.
 
-    Output: If there is a near color FoundSimilarity = true else
-    FoundSimilarity = false
+	Input: I5Colors - A 3-dimensional matrix representing the RGB values of a group of colors
+	       IcorrectColors - A 3-dimensional matrix representing the RGB values of another group of colors
+	       EdgeSize - The allowe LAB distance between two tested colors
+	Output: If there is a near color FoundSimilarity = true 
+				    else FoundSimilarity = false
 %} 
 
 %% Check For Color Intersection
 
     %Prepere the colors vectors
-    I5Colors = reshape(I5Colors, [size(I5Colors,1) 1 3]);
-    IcorrectColors = reshape(IcorrectColors, [size(IcorrectColors,1) 1 3]);
+    Colors1 = reshape(Colors1, [size(Colors1,1) 1 3]);
+    Colors2 = reshape(Colors2, [size(Colors2,1) 1 3]);
 
     %Convert the colors vectors from RGB to LAB
-    I5Lab = reshape(RGB2Lab(I5Colors),[size(I5Colors,1) 3]);
-    IcorrectLab = reshape(RGB2Lab(IcorrectColors),[size(IcorrectColors,1) 3]);
+    I5Lab = reshape(RGB2Lab(Colors1),[size(Colors1,1) 3]);
+    IcorrectLab = reshape(RGB2Lab(Colors2),[size(Colors2,1) 3]);
     
     %For each color check if it close to color in correctColorsVector
     for i=1:size(I5Lab,1)

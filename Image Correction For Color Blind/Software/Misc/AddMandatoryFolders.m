@@ -1,5 +1,13 @@
 function [] = AddMandatoryFolders()
-%Add necessery folders and subfolders to project searching paths
+%{
+Summary
+
+    Add the necessery folders and subfolders to project searching paths.
+	The function gets the necessery folders from the configuration file which available in this folder.
+	To add more folders to the searching path of matlab in the future, just add the folder to the configuration file. 
+
+
+%}
 
 % Read the xml file
 try
