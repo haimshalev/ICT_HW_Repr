@@ -53,8 +53,10 @@ WhitePoint = [0.3116 ; 0.3110]';
 %Lets use the spline to get the hue curve
 %The curve will pass through the white point and the two same points that
 %we got as parameters
-CurveX = [ xyzPoints(1,1) WhitePoint(1) xyzPoints(1,2)];
-CurveY = [ xyzPoints(2,1) WhitePoint(2) xyzPoints(2,2)];
+X = [0 xyzPoints(1,1) WhitePoint(1) xyzPoints(1,2) 1];
+Y = [0 xyzPoints(2,1) WhitePoint(2) xyzPoints(2,2) 1];
+CurveX = 0:0.05:1;
+CurveY = interp1(X,Y,CurveX);
 
 %Initialize the xyzModifiedImg
 xyzModifiedImg = zeros(size(xyzImg));
@@ -79,9 +81,9 @@ for i=1:1:n
     [intersectionX,intersectionY] = polyxpoly(X,Y,CurveX,CurveY);
     
     %this intersection point is the new color
-    xyzModifiedImg(1,i) = intersectionX;
-    xyzModifiedImg(2,i) = intersectionY;
-    xyzModifiedImg(3,i) = 1 - intersectionX - intersectionY;
+    xyzModifiedImg(1,i) = intersectionX(1);
+    xyzModifiedImg(2,i) = intersectionY(1);
+    xyzModifiedImg(3,i) = 1 - intersectionX(1) - intersectionY(1);
        
 end
 
