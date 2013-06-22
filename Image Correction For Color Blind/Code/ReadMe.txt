@@ -16,9 +16,12 @@ This code is divided into couple of folders:
 2.	Daltonize - implements the chosen "Daltonize" algorithm which described in the project documentation file.
 3.	Misc - A service functions which supports the previous algorithms.
 4.	The Main Folder - Holds the graphical user interface for this project and a demo script.
+5. 	Appendix - Holds the implementatio to the "xyz Based Simulation algorithm" which described in the project documentation file.
 
-For documentation and function guides for folders 1 , 2 and 3, please see the "Chosen Algorithms" section in the documentation file
+For documentation and function guides for folders 1 , 2 ,3 and 5, please see the "Chosen Algorithms" and "Appendix" sections in the documentation file
 and the readme file in each code folder.
+
+The xyz simulation algorithm in not included in the project automatically. To use it please see the "Appendix" section in the documentation file.
 
 ! THE PROJECT WAS BUILT AND TESTED ONLY ON THE "MATLAB R2013A" IDE
 

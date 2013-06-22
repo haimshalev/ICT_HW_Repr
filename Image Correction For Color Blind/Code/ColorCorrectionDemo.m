@@ -12,9 +12,9 @@ function [ ] = ColorCorrectionDemo()
     AddMandatoryFolders();
     
     % Read Demo images
-    RainbowFishes_RGB = imread('Rainbow Fishes.bmp');
-    Gaugin_RGB = imread('Gaugin.bmp');
-    Flowers_RGB = imread('Flowers.bmp');
+    RainbowFishes_RGB = imread('../Data/Input Images/Rainbow Fishes.bmp');
+    Gaugin_RGB = imread('../Data/Input Images/Gaugin.bmp');
+    Flowers_RGB = imread('../Data/Input Images/Flowers.bmp');
     
     % Color Blind Fix And Plot Demo images for Protanopes , Deuteranopes and Tritanopic 
     ColorBlindFixAndPlot(RainbowFishes_RGB, 'Ranibow Fishes');

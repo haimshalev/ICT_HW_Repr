@@ -83,7 +83,7 @@ function openFile_ClickedCallback(hObject, eventdata, handles)
 %Find Interactivly the path to the selected picture
 [filename, pathname] = uigetfile( ...
 {'*.bmp*',  'BMP File (*.bmp*)'}, ...
-   'Pick a file you want to work with');
+   'Pick a file you want to work with','../Data/Input Images');
 
 %if the user chose a file to work with 
 if (filename ~= 0)
@@ -243,7 +243,7 @@ function saveFigure_ClickedCallback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 %Get from the user the output folder and prefix of files
-[filename, pathname] = uiputfile({'*.bmp','bmp files'},'Save Images');
+[filename, pathname] = uiputfile({'*.bmp','bmp files'},'Save Images','../Data/Output Images');
 
 %if the user not canceled and choose a file name and path 
 if (filename ~= 0)
