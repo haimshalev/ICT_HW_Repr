@@ -3,13 +3,15 @@ function [ Ifinal , fileinfo , folderInfo ] = ColorBlindFix( ColorBlindType, Ori
 
 %{
     A generic function which gets a color blind type and an image.  
+    Finds the optimal transformation matrix.
     Returns a daltonize image and debug information about the result:
         ModificationConst,EdgeSize,Iterations...
 
-    Types supported:
-        ColorBlindType = 1  for protanopes
-        ColorBlindType = 2  for deuteranopes
-        ColorBlindType = 3  for tritanopic
+    Input: ColorBlindType - 1  for protanopes, 2  for deuteranopes, 3 for tritanopic
+	   OriginalPic_RGB - A 3-dimensional matrix representing the RGB values of the original image
+    Output: Ifinal - A 3-dimensional matrix representing the RGB values of the daltonized image
+            fileInfo - string which contains the info about the result (Only for debug)
+            folderInfo - string which contains the info about the result (Only for debug)
 %}
  
 %% Initializing stage

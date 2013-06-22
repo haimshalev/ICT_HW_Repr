@@ -5,10 +5,10 @@ function [ New_M ] = AdjustDaltonizationMatrix( ColorBlindType ,M , Modification
     Adjust the error transformation matrix accordingly to the
     dichromat type
 
-    Types supported:
-        ColorBlindType = 1  for protanopes
-        ColorBlindType = 2  for deuteranopes
-        ColorBlindType = 3  for tritanopic
+    Input: ColorBlindType - 1  for protanopes, 2  for deuteranopes, 3 for tritanopic
+           M - The current transformation matrix
+           ModificationConst - scalar which represent the amount of modifcation to M in each channel
+    Output:New_M - the updated transformation matrix after modification
 %}
     
 %% Adjust the error transformation matrix 

@@ -2,13 +2,11 @@ function [ M ] = GetDaltonizationMatrix( ColorBlindType )
 %% Summary
 
 %{
-    Get the initial error transformation matrix accordingly to the
-    dichromat type
+    Get the initial error transformation matrix accordingly to the dichromat type
 
-    Types supported:
-        ColorBlindType = 1  for protanopes
-        ColorBlindType = 2  for deuteranopes
-        ColorBlindType = 3  for tritanopic
+    Input: ColorBlindType - 1  for protanopes, 2  for deuteranopes, 3 for tritanopic
+    Output: M - The initial transformation matrix for the specified type of dichromat(As shown in the project documentation)
+
 %}
  
 %% Returning the matrices
