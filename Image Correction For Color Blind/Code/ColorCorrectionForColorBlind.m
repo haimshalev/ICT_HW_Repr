@@ -43,6 +43,7 @@ else
 end
 addpath(genpath('Misc'));
 AddMandatoryFolders();
+warning ('off','all');
 
 % End initialization code - DO NOT EDIT
 
@@ -260,6 +261,5 @@ else
     export_fig([pathname '(Daltonized) ' filename], '-bmp',handles.figure_3());
     export_fig([pathname '(Daltonized Simulated) ' filename], '-bmp',handles.figure_4());
 end
-    warning ('on','all');
     disp(['--- Saved Snapshot to : ' pathname filename] );
 end
