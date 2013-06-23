@@ -88,7 +88,7 @@ function openFile_ClickedCallback(hObject, eventdata, handles)
 %if the user chose a file to work with 
 if (filename ~= 0)
     %load the image to workspace variable
-    image = imread(strcat(pathname,filename),'bmp');
+    image = imread(strcat(pathname,filename));
     assignin('base', 'importedImg',image);
     
     %Show the selected image on figure 1
