@@ -8,6 +8,7 @@
     <folder>Color Blind Simulation</folder>
     <folder>Daltonize</folder>
     <folder>Misc</folder>
+    <folder>../Data</folder>
   </MandatoryFolderPaths>
   
   <!-- Every subProject configuration-->

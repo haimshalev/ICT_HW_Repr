@@ -46,14 +46,13 @@ iii.	Daltonized simulate image for Protanopes , Deuteranopes and Tritanopic.
 
 3)	Daltonize function for a group of pictures:
 
-[] = DaltonizeFolder(InputFolderPath,OutputFolderPath,ColorBlindType)
-	A generic function which gets a color blind type and to folder paths.
-	The function run over all the bmp images in the InputFolder.
-	For each image it will save in the outputfolder 3 images: The simulated image, The daltonized Image and the simulated daltonized image.
+[] = DaltonizeFolder(ColorBlindType)
+	A function which gets a color blind type.
+	The function run over all the bmp images in the "Data/Input Images/".
+	For each image it will save in "Data/Output/" folder 3 images: 	
+		The simulated image, The daltonized Image and the simulated daltonized image.
 Input:
-	InputFolderPath – A string which holds the path to the input folder
-	OutputFolderPath – A string which holds the path to the output folder (Should be created before the call to the function)	
-	ColorBlindType - 1  for protanopes, 2  for deuteranopes, 3 for tritanopic
+	ColorBlindType: 1 for protanopes, 2 for deuteranopes, 3 for tritanopic
 	
 ****************************************************************************************
 Using the main functions manually:
