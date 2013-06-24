@@ -1012,11 +1012,19 @@ href="#02">Why it will be used for?</a> </span></p>
 
 <p style='margin-top:6.75pt;margin-right:0in;margin-bottom:1.5pt;margin-left:
 0in'><span style='font-size:13.5pt;font-family:"Arial","sans-serif"'><a
+href="#_ZipFile">Where can I get this program?</a> </span></p>
+
+<p style='margin-top:6.75pt;margin-right:0in;margin-bottom:1.5pt;margin-left:
+0in'><span style='font-size:13.5pt;font-family:"Arial","sans-serif"'><a
+href="#_WhoWroteThis">Who wrote this and why?</a> </span></p>
+
+<p style='margin-top:6.75pt;margin-right:0in;margin-bottom:1.5pt;margin-left:
+0in'><span style='font-size:13.5pt;font-family:"Arial","sans-serif"'><a
 href="#_Simulation_of_color">Simulation of color appearance for dichromats</a><o:p></o:p></span></p>
 
 <p style='margin-top:6.75pt;margin-right:0in;margin-bottom:1.5pt;margin-left:
 0in'><span style='font-size:13.5pt;font-family:"Arial","sans-serif"'><a
-href="#03">DaltonizeAlgorithm</a> </span></p>
+href="#03">Daltonize Algorithm</a> </span></p>
 
 <p style='margin-bottom:12.0pt'><br>
 <span class=Heading1Char><span style='font-size:14.0pt;mso-bidi-font-size:20.0pt'>What
@@ -1045,6 +1053,31 @@ This application will be used to people who interested to check it work for
 color blind visibility.<br>
 It is also interesting to anyone who is just plain curious about what the world
 looks like if you're color blind. </span></p>
+
+<p style='margin-bottom:12.0pt'><br>
+<span class=Heading1Char><span style='font-size:14.0pt;mso-bidi-font-size:20.0pt'>
+Where can I get this program?</span></span><a name="_ZipFile"></a><span class=TitleChar><span
+style='font-size:26.0pt'> <br>
+</span></span><br>
+<span style='font-family:"Arial","sans-serif"'>
+<font face="Arial">
+It can be downloaded from
+<a href="Image%20Correction%20for%20Color%20Blind_files/Image Correction For Color Blind Software.zip">right here</a>
+</font>
+</span></p>
+
+<p style='margin-bottom:12.0pt'><br>
+<span class=Heading1Char><span style='font-size:14.0pt;mso-bidi-font-size:20.0pt'>
+Who wrote this and why?</span></span><a name="_WhoWroteThis"></a><span class=TitleChar><span
+style='font-size:26.0pt'> <br>
+</span></span><br>
+<span style='font-family:"Arial","sans-serif"'>
+This program is a final project in the course &#8221;Imaging Science and Technology&#8221; 
+submitted by Haim Shalelasvili, Zahi Kfir and Julie Dai <br> as part of their studies 
+for a Msc in Computer Science degree at the University of Haifa.<br> 
+The project was performed under the supervision of Hagit Hel-Or.<br>
+</span></p>
+
 
 <h1><a name="_Simulation_of_color"></a>Simulation of color appearance for
 dichromats</h1>
@@ -1306,40 +1339,206 @@ src="Image%20Correction%20for%20Color%20Blind_files/image006.jpg" v:shapes="Pict
 class=Heading1Char><span style='font-size:14.0pt;mso-bidi-font-size:20.0pt'>Daltonize
 <a name=03></a>Algorithm</span></span><span class=TitleChar><span
 style='font-size:26.0pt'> </span></span><span style='font-family:"Arial","sans-serif"'><br>
-</span><span style='font-size:11.0pt;font-family:"Arial","sans-serif"'>There
-are 2 main parts:</span><span style='font-family:"Arial","sans-serif"'> </span><span
-style='font-size:11.0pt;font-family:"Arial","sans-serif"'><o:p></o:p></span></p>
+<span style='font-family:"Arial","sans-serif"'></br>
+Daltonization is a procedure for adapting colors in an image or a sequence of images for improving the color perception by a color-deficient viewer.</br></br>
+The basic idea behind daltonization is to calculate the error matrix, which is the image consisting of simulated image subtracted from the original image. </br>
+This represents the information lost during the transformation. The error picture is what cannot be conveyed to a color blind person. We make a linear </br>
+transformation on this picture so that it can be conveyed, and add this on the original picture to find the daltonized image. </br>
 
-<pre><o:p>&nbsp;</o:p></pre><pre><span style='font-size:12.0pt;font-family:
-"Arial","sans-serif"'>1. <u>Choose Key-colors</u>:<o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;</span>To reduce the computation time, we do not process all the colors in an image, Instead, following the granular computing principle, <o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;</span>we only extract significant colors that are called key colors from an image via AP method.<o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>Affinity propagation (AP): <o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>This method is an exemplar-based clustering algorithm operated by exchanging messages between data points and learning a probability model of the data. <o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Two kinds of messages, responsibility and availability, are used to take different kinds of competition into account. <o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>The responsibility sent from data point m to candidate exemplar point n, reflects how well-suited point n is to serve as the exemplar for point m. <o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>The availability sent from candidate exemplar point n to point m, reflects how appropriate it would be for point m to choose point n as its exemplar. <o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>The affinity between two data points gives an indication of whether they should be clustered together. <o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>It is able to choose the number of clusters automatically based on input data. <o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>The similarity s(m, n) of the affinity propagation is defined by the Euclidean distance between two colors m and n in the CIEL*a*b* color space. <o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>we determine the inference value of AP by using the median similarity, and thus it does not rely on initial conditions.<o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><o:p>&nbsp;</o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'>2. <u>Key-color Remapping</u>:<o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><o:p>&nbsp;</o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>We define the color mapping function M(.) { according to a specific type of color blind } to map the key colors to the reference colors in the CVD space.<o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>M(.) should maintains, not enhance, the original contrast in the image.<o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>M(.) should preserve the naturalness of the original colors.<o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>Naturalness preserving:<o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>keep those colors that are visible by dichromats in the CVD space remaining unchanged. <o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Taking protanopia type of color blind as an example: <o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>grey scale colors are accepted without any difference, <o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>yellow and blue colors will be slightly different from normal people,<o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>red and green colors are confused by CVD viewers. <o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>What should be handled for naturalness preserving is: <o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>preserve all grey scale colors, <o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>place yellow and blue colors with a little movement, <o:p></o:p></span></pre><pre><span
-style='font-size:12.0pt;font-family:"Arial","sans-serif"'><span style='mso-spacerun:yes'>&nbsp;&nbsp;</span><span style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>and rearrange red and green colors according to the original color contrast. <o:p></o:p></span></pre>
+<h2 style="color:#17365D;font-weight: bold;">Initial Transformation Matrices</h2>
+	</br>
+	<table style="color:#000"><tr>
+	<td>Protanope : </td>
+	<td>
+	<table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000;color:#000"><tr>
+	<td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp</td><td><table border=0 cellpadding=0 cellspacing=0 style="color:#000;">
+	<tr>
+	<td align="center" valign="center" width=30>0</td>
+	<td align="center" valign="center" width=30>0</td>
+	<td align="center" valign="center" width=30>0</td>
+	</tr>
+	<tr>
+	<td align="center" valign="center" width=30>0.7</td>
+	<td align="center" valign="center" width=30>1</td>
+	<td align="center" valign="center" width=30>0</td>
+	</tr>
+	<tr>
+	<td align="center" valign="center" width=30>0.7</td>
+	<td align="center" valign="center" width=30>0</td>
+	<td align="center" valign="center" width=30>1</td>
+	</tr>
+	</table></td><td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp</td></tr></table>
+	</td>
+
+	<td>Deuteranopic : </td>
+	<td>
+	<table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000;color:#000"><tr>
+	<td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp</td><td><table border=0 cellpadding=0 cellspacing=0 style="color:#000;">
+	<tr>
+	<td align="center" valign="center" width=30>1</td>
+	<td align="center" valign="center" width=30>0.7</td>
+	<td align="center" valign="center" width=30>0</td>
+	</tr>
+	<tr>
+	<td align="center" valign="center" width=30>0</td>
+	<td align="center" valign="center" width=30>0</td>
+	<td align="center" valign="center" width=30>0</td>
+	</tr>
+	<tr>
+	<td align="center" valign="center" width=30>0</td>
+	<td align="center" valign="center" width=30>0.7</td>
+	<td align="center" valign="center" width=30>1</td>
+	</tr>
+	</table></td><td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp</td></tr></table>
+	</td>
+
+	<td>Tritanopic : </td>
+	<td>
+	<table border=0 cellpadding=0 cellspacing=0px style="border-left:1px solid #000; border-right:1px solid #000;color:#000"><tr>
+	<td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp</td><td><table border=0 cellpadding=0 cellspacing=0 style="color:#000;">
+	<tr>
+	<td align="center" valign="center" width=30>1</td>
+	<td align="center" valign="center" width=30>0.7</td>
+	<td align="center" valign="center" width=30>0.7</td>
+	</tr>
+	<tr>
+	<td align="center" valign="center" width=30>0</td>
+	<td align="center" valign="center" width=30>1</td>
+	<td align="center" valign="center" width=30>0.7</td>
+	</tr>
+	<tr>
+	<td align="center" valign="center" width=30>0</td>
+	<td align="center" valign="center" width=30>0</td>
+	<td align="center" valign="center" width=30>0</td>
+	</tr>
+	</table></td><td style ="border-top:1px solid #000; border-bottom:1px solid #000;">&nbsp</td></tr></table>
+	</td>
+</tr></table>
+For each color blind type the problematic cone information is conveyed to the other two cones.
+
+<h2 style="color:#17365D;font-weight: bold;">Why The Current Algorithm need Improvment?</h2>
+	<ul>
+		<li>Transformation matrix is manually chosen by the user until the resulting image is in adequate quality.</li>
+		<li>There is always the possibility of color matching between the original and the daltonized image.</li>
+		<li>Problem of unnatural appearance after the image processing.</li>
+	</ul>
+	<h3 style="color:#17365D;font-weight:normal;">Solutions:</h3>
+	<ul>
+		<li>An automatic iteration technique for the selection of the transformation matrices.</li>
+		<li>A color checking module, which eliminates the possibility of color matching between the original and the daltonized image.</li>
+		<li>Add a set of rules for choosing the transformation matrix for the procedure to be more natural.</li>
+	</ul>
+	
+<h2 style="color:#17365D;font-weight: bold;">The Improved Daltonize Algorithm Steps</h2></br>
+	Our algorithm uses two groups of colors to find the optimal transformation matrix:
+	<ul>
+		<li>Ccorrect – colors that the color blind person see correctly.</li>
+		<li>Cincorrect – colors that the color blind person see differently from a person with normal vision.</li>
+	</ul>
+	<h3 style="color:#17365D;font-weight:normal;">We needs to achieve 3 goals:</h3>
+	<ul>
+		<li>For the Ccorrect colors – The daltoniztion procedure should do minor modifications to maintain naturalism.</li>
+		<li>For the Cincorrect colors- The daltoniziation procedure must change them accordingly to the amount of information which lost.</li>
+		<li>No color in Cincorrect should be daltonized to a color that the color blind people would perceive as similar to a color from Ccorrect.</li>
+	</ul>
+	<h3 style="color:#17365D;font-weight:normal;">The algorithm:</h3>
+	<ol>
+		<li>Initialize a transformation matrix M.</li>
+		<li>Create quantized list of colors.</li>
+		<li>Classify each color from list of colors, as belonging to Ccorrect or Cincorrect.</li>
+		<li>Apply color daltonization to every color in Cincorrect and name the resulting matrix Cdalton.</li>
+		<li>Run color blind simulation on every color in Cdalton and name the resulting matrix Csimulated.</li>
+		<li>If there is no color conflict between Ccorrect and Csimulated go to step 7. Otherwise go back to step 2, after modifying M.</li>
+		<li>Produce the result image by replacing, in the original image, every color in Cincorrect with the corresponding color in Cdalton.</li>
+	</ol>
+	<h3 style="color:#17365D;font-weight:normal;">Modifying M:</h3>
+	On each iteration M is modified by conveying different amount of the missing cone information to the other two cones.</br>
+	If we don't find a good transformation matrix we decrease the allowed distance between colors in the color checking module, which used in 6. 
+</br>
+<h2 style="color:#17365D;font-weight: bold;">Known Transformation Matrix M:</h2></br>
+	There are two approaches after finding the transformation matrix:
+	<ul>
+		<li>
+			Modifying only Cincorrect using modification matrix M.
+			<dl>
+				<dt>Advantages:</dt>
+					<dd>- Preserving naturalness.</br>
+						&nbsp;&nbsp;Colors that color-deficient viewer have no problem seeing aren’t been modified.
+					</dd>
+				<dt>Disadvantages:</dt>
+				<dd>- Unsmooth image colors.</br>
+					&nbsp;&nbsp;There is predefined threshold to tell apart Cincorrect from Ccorrect,</br> 
+					&nbsp;&nbsp;therefore, there might be two very close colors around that </br>
+					&nbsp;&nbsp;threshold, where one color mapped into Cincorrect and the other </br>
+					&nbsp;&nbsp;mapped into Ccorrect, the first color will be daltonize and the</br>
+					&nbsp;&nbsp;second  will stay the same. Cause some noise pixels that are just </br>
+					&nbsp;&nbsp;above/below the threshold to be different from their surroundings. 
+				</dd>
+			</dl>
+		</li>
+		<li>
+			Modifying all of the original image  using modification matrix M.
+			<dl>
+				<dt>Advantages:</dt>
+					<dd>- smooth image colors. </br>
+						&nbsp;&nbsp;Modify all pixels with a Linear daltonization matrix.
+					</dd>
+				<dt>Disadvantages:</dt>
+				<dd>- Less Preserving naturalness.</br>
+					  &nbsp;&nbsp;Daltonize Colors that color-deficient viewer have no problem seeing.
+				</dd>
+			</dl>
+		</li>
+	</ul></br>
+	We use the second approach, Modifying all of the original image because the Naturalness is only Slightly damaged.</br></br>
+	Ccorrect are colors that the color blind person see correctly (with very small error), since we daltonize correspondingly </br>
+	to the Error, the colors in Ccorrect are hardly changed.</br></br>
+
+	We gain much smoother image with Slightly Naturalness damage.
+
+	<h3>Results:</h3>
+	We used sample pictures to test the effectiveness of our algorithm.</br>
+	<table>
+	<tr>
+		<td>1.</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>	<p class=MsoNormal><span style='mso-no-proof:yes'>
+				<![if !vml]><img border=0 width=914 height=786
+				src="Image%20Correction%20for%20Color%20Blind_files/image008.jpg" v:shapes="Picture_x0020_15"><![endif]></span></p>
+		</td>
+	</tr>
+	<tr>
+		<td>2.</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><p class=MsoNormal><span style='mso-no-proof:yes'>
+			<![if !vml]><img border=0 width=914 height=786
+			src="Image%20Correction%20for%20Color%20Blind_files/image009.jpg" v:shapes="Picture_x0020_15"><![endif]></span></p></td>
+	</tr>
+	<tr>
+		<td>3.</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>
+			<p class=MsoNormal><span style='mso-no-proof:yes'>
+			<![if !vml]><img border=0 width=914 height=786
+			src="Image%20Correction%20for%20Color%20Blind_files/image010.jpg" v:shapes="Picture_x0020_15"><![endif]></span></p>
+		</td>
+	</tr>
+	</table>
+</br>	
+	<font face="Arial">
+	&nbsp;&nbsp;&nbsp;&nbsp;For more results it can be downloaded from
+<a href="Image%20Correction%20for%20Color%20Blind_files/Results.zip">right here</a>
+</font>
+</span></p>
 
 <p style='tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt'><span
 style='font-family:"Arial","sans-serif"'><br>
